@@ -73,17 +73,19 @@ export default {
     },
     scrollCart() {
       let beforeScrollY = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-      window.addEventListener('scroll', () => {
-        let currentScrollY = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        if(currentScrollY > beforeScrollY){ // 向下滾動
-          this.cartRotate += 1;
+      const setRotate = () => {
+        const currentScrollY = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        let isScrollDown = currentScrollY >= beforeScrollY ? true : false;
+        if(isScrollDown){ // 向下滾動
+          this.cartRotate += 0.5;
+          beforeScrollY = currentScrollY;
+        } 
+        if(!isScrollDown) {
+          this.cartRotate -= 0.8;
           beforeScrollY = currentScrollY;
         }
-        if(currentScrollY < beforeScrollY){ // 向上滾動
-          this.cartRotate -= 1;
-          beforeScrollY = currentScrollY;
-        }
-      })
+      }
+      window.addEventListener('mousewheel', setRotate)
     }
   }
 };

@@ -1,24 +1,29 @@
 <template>
   <div>
-    <header-menu/>
-    <router-view/>
-    <footer-info/>
+    <header-menu />
+    <router-view />
+    <footer-info />
   </div>
 </template>
 <script>
-import footerInfo from './footer.vue';
-import headerMenu from './header.vue';
+import footerInfo from "./footer.vue";
+import headerMenu from "./header.vue";
 
 export default {
   components: {
     headerMenu,
-    footerInfo,
-  },
+    footerInfo
+  }
 };
 </script>
 <style>
-@media screen and (min-width: 576px){
-  html, body {
+html,
+body {
+  scroll-behavior: smooth;
+}
+@media screen and (min-width: 576px) {
+  html,
+  body {
     font-size: 24px;
   }
 }
@@ -26,28 +31,28 @@ export default {
 <style lang="scss" scoped>
 ::v-deep .titleName {
   font-size: 1.2rem;
-  color: #FFF;
-  @media screen and (min-width: 992px){
+  color: #fff;
+  @media screen and (min-width: 992px) {
     font-size: 2rem;
   }
 }
 ::v-deep .subName {
-  color: rgba(255,255,255,.1);
+  color: rgba(255, 255, 255, 0.1);
   font-family: Arial;
   font-size: 1.8rem;
   margin-top: -5.5%;
   white-space: nowrap;
-  @media screen and (min-width: 992px){
+  @media screen and (min-width: 992px) {
     font-size: 3rem;
   }
-  @media screen and (min-width: 1200px){
+  @media screen and (min-width: 1200px) {
     font-size: 5rem;
   }
 }
 ::v-deep .step {
   font-size: 1.2rem;
   color: #000;
-  background-color: #B7B7B7;
+  background-color: #b7b7b7;
   width: 2rem;
   height: 2rem;
   line-height: 2rem;
@@ -56,25 +61,25 @@ export default {
   display: flex;
   justify-content: center;
   &.active {
-    background-color: #FEECBA;
+    background-color: #feecba;
   }
 }
 ::v-deep .stepText {
-  color: #B7B7B7;
+  color: #b7b7b7;
   font-size: 1.2rem;
   border-bottom: 2px solid;
-  margin: 0 .6rem;
+  margin: 0 0.6rem;
   &.active {
-    color: #FEECBA;
-    border-color: #FEECBA;
+    color: #feecba;
+    border-color: #feecba;
   }
 }
 ::v-deep .stepArrow {
   font-size: 1.8rem;
-  color: #B7B7B7;
+  color: #b7b7b7;
   margin: 0 1.5rem;
   &.active {
-    color: #FEECBA;
+    color: #feecba;
   }
 }
 ::v-deep .align-middle {
@@ -87,7 +92,8 @@ export default {
 ::v-deep .tbody {
   background-color: #171717;
 }
-::v-deep .table th, ::v-deep .table td {
+::v-deep .table th,
+::v-deep .table td {
   vertical-align: middle;
   border: 0;
 }

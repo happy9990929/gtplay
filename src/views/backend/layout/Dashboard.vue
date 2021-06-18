@@ -80,6 +80,9 @@ export default {
 <style lang="scss" scoped>
 .logo {
   width: 100px;
+  @media screen and (min-width:768px) {
+    width: 170px;
+  }
 }
 .navBar {
   width: 100%;
@@ -88,6 +91,10 @@ export default {
   top: 0;
   left: 0;
   z-index: 10;
+  @media screen and (min-width:768px) {
+    bottom: 0;
+    width: 260px;
+  }
 }
 .navItem {
   color: #8391a2;
@@ -95,13 +102,24 @@ export default {
   padding: .5rem 0 .5rem 35%;
   transition: all .2s ease;
   cursor: pointer;
+  @media screen and (min-width:768px) {
+    width: 75%;
+    padding: .8rem;
+    margin: .5rem auto;
+  }
   &:hover {
     color: #cedce4;
     background-color: #424d5a;
+    @media screen and (min-width:768px) {
+      background-color: initial;
+    }
   }
   &.router-link-active {
     color: #ffffff;
     background-color: #424d5a;
+    @media screen and (min-width:768px) {
+      background-color: initial;
+    }
   }
 }
 ::v-deep .btn-orange {
@@ -115,6 +133,7 @@ export default {
   border: none;
   box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
   margin-bottom: 24px;
+  background-color: #222;
 }
 ::v-deep .thead {
   background-color: #f1f3fa;
@@ -122,6 +141,7 @@ export default {
 }
 ::v-deep .table th, ::v-deep .table td {
   vertical-align: middle;
+  border-top: 1px solid #383838;
 }
 ::v-deep .table thead th {
   vertical-align: bottom;
@@ -150,27 +170,10 @@ export default {
     }
   }
 }
+.content  {
 @media screen and (min-width:768px){
-  .logo {
-    width: 170px;
-  }
-  .navBar {
-    bottom: 0;
-    width: 260px;
-  }
-  .content {
-    margin-left: 260px;
-  }
-  .navItem {
-    width: 75%;
-    padding: .8rem;
-    margin: .5rem auto;
-    &:hover {
-      background-color: initial;
-    }
-    &.router-link-active {
-      background-color: initial;
-    }
-  }
+  margin-left: 260px;
 }
+}
+
 </style>

@@ -3,7 +3,7 @@
     <h3 class="my-4">產品列表</h3>
     <div class="card">
       <div class="card-body">
-        <button class="btn btn-orange" @click="openModal('new')">
+        <button class="btn btn-gold" @click="openModal('new')">
           <i class="fas fa-plus-circle"></i>
           建立新的產品
         </button>
@@ -25,8 +25,8 @@
                 <td>
                   <div
                     class="productImg"
-                    :style="`backgroundImage:url('${item.imageUrl[0]}')`">
-                  </div>
+                    :style="`backgroundImage:url('${item.imageUrl[0]}')`"
+                  ></div>
                 </td>
                 <td>{{ item.title }}</td>
                 <td>{{ item.category }}</td>
@@ -34,8 +34,12 @@
                 <td>{{ item.price }}</td>
                 <td>
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input"
-                    :checked="item.enabled" disabled>
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      :checked="item.enabled"
+                      disabled
+                    />
                     <label class="custom-control-label"></label>
                   </div>
                 </td>
@@ -51,12 +55,17 @@
             </tbody>
           </table>
         </div>
-        <Pagination :pages="pagination" @go-page="getProducts"/>
+        <Pagination :pages="pagination" @go-page="getProducts" />
       </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="product"
-      tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="product"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
@@ -73,81 +82,119 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-sm-4">
-                <div class="form-group"
-                  v-for="i in 5"
-                  :key="i+'img'"
-                >
+                <div class="form-group" v-for="i in 5" :key="i + 'img'">
                   <label :for="`img${i}`">輸入圖片網址</label>
-                  <input type="text" placeholder="請輸入圖片連結" :id="`img${i}`"
-                  class="form-control" v-model="temProduct.imageUrl[i-1]">
+                  <input
+                    type="text"
+                    placeholder="請輸入圖片連結"
+                    :id="`img${i}`"
+                    class="form-control"
+                    v-model="temProduct.imageUrl[i - 1]"
+                  />
                 </div>
                 <div class="form-group">
-                  <label for="customFile">或 上傳圖片
+                  <label for="customFile"
+                    >或 上傳圖片
                     <span v-if="status.fileUploading">
-                      <i class="fas fa-spinner fa-spin"/>
+                      <i class="fas fa-spinner fa-spin" />
                     </span>
                   </label>
                   <input
-                  type="file"
-                  id="customFile"
-                  ref="file"
-                  class="form-control"
-                  @change="uploadFile"
-                  >
+                    type="file"
+                    id="customFile"
+                    ref="file"
+                    class="form-control"
+                    @change="uploadFile"
+                  />
                 </div>
-                <img
-                    class="img-fluid"
-                    :src="temProduct.imageUrl[0]"
-                  >
+                <img class="img-fluid" :src="temProduct.imageUrl[0]" />
               </div>
               <div class="col-sm-8">
                 <div class="form-group">
                   <label for="title">標題</label>
-                  <input id="title" type="text" placeholder="請輸入標題"
-                  required="required" class="form-control" v-model="temProduct.title">
+                  <input
+                    id="title"
+                    type="text"
+                    placeholder="請輸入標題"
+                    required="required"
+                    class="form-control"
+                    v-model="temProduct.title"
+                  />
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="category">分類</label>
-                    <input id="category" type="text" placeholder="請輸入分類" required="required"
-                     class="form-control" v-model="temProduct.category">
+                    <input
+                      id="category"
+                      type="text"
+                      placeholder="請輸入分類"
+                      required="required"
+                      class="form-control"
+                      v-model="temProduct.category"
+                    />
                   </div>
                   <div class="form-group col-md-6">
                     <label for="unit">單位</label>
-                    <input id="unit" type="text" placeholder="請輸入單位"
-                    class="form-control" v-model="temProduct.unit">
+                    <input
+                      id="unit"
+                      type="text"
+                      placeholder="請輸入單位"
+                      class="form-control"
+                      v-model="temProduct.unit"
+                    />
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="origin_price">原價</label>
-                    <input id="origin_price" type="number" placeholder="請輸入原價" required="required"
-                     class="form-control" v-model="temProduct.origin_price">
+                    <input
+                      id="origin_price"
+                      type="number"
+                      placeholder="請輸入原價"
+                      required="required"
+                      class="form-control"
+                      v-model="temProduct.origin_price"
+                    />
                   </div>
                   <div class="form-group col-md-6">
                     <label for="price">售價</label>
-                    <input id="price" type="number" placeholder="請輸入售價"
-                    class="form-control" v-model="temProduct.price">
+                    <input
+                      id="price"
+                      type="number"
+                      placeholder="請輸入售價"
+                      class="form-control"
+                      v-model="temProduct.price"
+                    />
                   </div>
                 </div>
-                <hr/>
+                <hr />
                 <div class="form-group">
                   <label for="description">產品說明</label>
-                  <textarea id="description" type="text" placeholder="請輸入產品說明"
-                   required="required" class="form-control" v-model="temProduct.description">
-                   </textarea>
+                  <textarea
+                    id="description"
+                    type="text"
+                    placeholder="請輸入產品說明"
+                    required="required"
+                    class="form-control"
+                    v-model="temProduct.description"
+                  >
+                  </textarea>
                 </div>
                 <div class="form-group">
                   <label for="content">產品描述</label>
-                  <VueEditor v-model="temProduct.content"/>
+                  <VueEditor v-model="temProduct.content" />
                 </div>
                 <div class="form-group">
                   <div class="form-check">
-                    <input id="is_enabled" type="checkbox"
-                    class="form-check-input" v-model="temProduct.enabled">
+                    <input
+                      id="is_enabled"
+                      type="checkbox"
+                      class="form-check-input"
+                      v-model="temProduct.enabled"
+                    />
                     <label for="is_enabled" class="form-check-label">是否啟用</label>
-                    </div>
                   </div>
+                </div>
               </div>
             </div>
           </div>
@@ -167,24 +214,13 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div
-        class="modal-dialog"
-        role="document"
-      >
+      <div class="modal-dialog" role="document">
         <div class="modal-content border-0">
           <div class="modal-header bg-danger text-white">
-            <h5
-              id="exampleModalLabel"
-              class="modal-title"
-            >
+            <h5 id="exampleModalLabel" class="modal-title">
               <span>刪除產品</span>
             </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -193,18 +229,10 @@
             <strong class="text-danger">{{ temProduct.title }}</strong> 商品(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              data-dismiss="modal"
-            >
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
               取消
             </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-              @click="delProduct"
-            >
+            <button type="button" class="btn btn-danger" @click="delProduct">
               確認刪除
             </button>
           </div>
@@ -216,25 +244,25 @@
 
 <script>
 /* global $ */
-import Pagination from '@/components/Pagination.vue';
-import { VueEditor } from 'vue2-editor';
+import Pagination from "@/components/Pagination.vue";
+import { VueEditor } from "vue2-editor";
 
 export default {
   components: {
     Pagination,
-    VueEditor,
+    VueEditor
   },
   data() {
     return {
       products: [],
       pagination: {},
       temProduct: {
-        imageUrl: [],
+        imageUrl: []
       },
       isNew: false,
       status: {
-        fileUploading: false,
-      },
+        fileUploading: false
+      }
     };
   },
   created() {
@@ -245,43 +273,49 @@ export default {
     getProducts(page = 1) {
       const loader = this.$loading.show();
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/products?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.products = res.data.data;
-        this.pagination = res.data.meta.pagination;
-        loader.hide();
-      }).catch((error) => {
-        console.log(error);
-        loader.hide();
-      });
+      this.$http
+        .get(api)
+        .then(res => {
+          this.products = res.data.data;
+          this.pagination = res.data.meta.pagination;
+          loader.hide();
+        })
+        .catch(error => {
+          console.log(error);
+          loader.hide();
+        });
     },
     getDetails(id) {
       const loader = this.$loading.show();
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product/${id}`;
-      this.$http.get(api).then((res) => {
-        this.temProduct = res.data.data;
-        $('#product').modal('show');
-        loader.hide();
-      }).catch((error) => {
-        console.log(error);
-        loader.hide();
-      });
+      this.$http
+        .get(api)
+        .then(res => {
+          this.temProduct = res.data.data;
+          $("#product").modal("show");
+          loader.hide();
+        })
+        .catch(error => {
+          console.log(error);
+          loader.hide();
+        });
     },
     openModal(isNew, item) {
       switch (isNew) {
-        case 'new':
+        case "new":
           this.temProduct = {
-            imageUrl: [],
+            imageUrl: []
           };
           this.isNew = true;
-          $('#product').modal('show');
+          $("#product").modal("show");
           break;
-        case 'edit':
+        case "edit":
           this.isNew = false;
           this.getDetails(item.id);
           break;
-        case 'delete':
+        case "delete":
           this.temProduct = { ...item };
-          $('#delProduct').modal('show');
+          $("#delProduct").modal("show");
           break;
         default:
           break;
@@ -291,65 +325,73 @@ export default {
       const loader = this.$loading.show();
       // 新增商品
       let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product`;
-      let httpMethod = 'post';
+      let httpMethod = "post";
       if (!this.isNew) {
         api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product/${this.temProduct.id}`;
-        httpMethod = 'patch';
+        httpMethod = "patch";
       }
-      this.$http[httpMethod](api, this.temProduct).then(() => {
-        $('#product').modal('hide');
-        this.getProducts();
-        loader.hide();
-      }).catch((error) => {
-        console.log(error);
-        loader.hide();
-      });
+      this.$http[httpMethod](api, this.temProduct)
+        .then(() => {
+          $("#product").modal("hide");
+          this.getProducts();
+          loader.hide();
+        })
+        .catch(error => {
+          console.log(error);
+          loader.hide();
+        });
     },
     delProduct() {
       const loader = this.$loading.show();
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product/${this.temProduct.id}`;
-      this.$http.delete(api).then(() => {
-        loader.hide();
-        $('#delProduct').modal('hide');
-        this.getProducts();
-      }).catch((error) => {
-        loader.hide();
-        console.log(error);
-      });
+      this.$http
+        .delete(api)
+        .then(() => {
+          loader.hide();
+          $("#delProduct").modal("hide");
+          this.getProducts();
+        })
+        .catch(error => {
+          loader.hide();
+          console.log(error);
+        });
     },
     uploadFile() {
       // 選取DOM中的檔案資訊
       const uploadFile = this.$refs.file.files[0];
       const formData = new FormData();
       // file為欄位
-      formData.append('file', uploadFile);
+      formData.append("file", uploadFile);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/storage`;
       this.status.fileUploading = true;
-      this.$http.post(api, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }).then((res) => {
-        this.status.fileUploading = false;
-        console.log(res);
-        if (res.status === 200) {
-          this.temProduct.imageUrl.push(res.data.data.path);
-        }
-      }).catch((error) => {
-        this.status.fileUploading = false;
-        console.log(error);
-      });
-    },
-  },
+      this.$http
+        .post(api, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(res => {
+          this.status.fileUploading = false;
+          console.log(res);
+          if (res.status === 200) {
+            this.temProduct.imageUrl.push(res.data.data.path);
+          }
+        })
+        .catch(error => {
+          this.status.fileUploading = false;
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
-  .productImg {
-    width: 100%;
-    min-width: 100px;
-    height: 100px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+.productImg {
+  width: 100%;
+  min-width: 100px;
+  height: 100px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 </style>

@@ -1,7 +1,7 @@
 module.exports = {
-  // publicPath: process.env.NODE_ENV === 'production'
-  //   ? ''
-  //   : '/',
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/gtplay/'
+    : '/',
   chainWebpack: config => {
     config
       .plugin('html')
