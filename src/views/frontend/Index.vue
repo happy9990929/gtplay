@@ -9,9 +9,9 @@
               來自台灣的專業技師製作，難以抗拒的共鳴音色
               <br />多種入門至進階款式，找到練琴的最佳手感
             </div>
-            <router-link to="/products" class="bannerBtn">
+            <router-link to="/products" class="outlineBtn">
               <span>挑選你的吉他</span>
-              <span class="angleLine ml-2"></span>
+              <span class="angleLineLeft ml-2"></span>
             </router-link>
           </div>
           <div>
@@ -197,7 +197,7 @@
       style="margin-top: 500px;"
       v-show="ukulele.showOtherImg === true"
     >
-      <div class="mt-5">
+      <div class="mt-5 d-block d-lg-flex justify-content-center">
         <div>
           © 2021. All Rights Reserved.
         </div>
@@ -279,51 +279,10 @@ export default index;
     line-height: 2.5rem;
   }
 }
-.bannerBtn {
-  border: 1px solid #fff;
-  color: #fff;
-  padding: 10px 15px;
-  font-size: 0.8rem;
-  display: inline-flex;
-  align-items: center;
-  transition: all 0.4s ease;
-  &:hover {
-    color: #feecba;
-    border-color: #feecba;
-  }
-  &:hover .angleLine {
-    width: 80px;
-    background-color: #feecba;
-  }
-  @media screen and (min-width: 992px) {
-    font-size: 1rem;
-  }
-}
-@mixin angleArrow {
-  content: "";
-  position: absolute;
-  right: 0;
-  width: 10px;
-  height: 1px;
-  background-color: #fff;
-}
-.angleLine {
-  width: 50px;
-  height: 1px;
-  display: inline-block;
-  position: relative;
-  transition: all 0.4s ease;
-  background-color: #fff;
-  &::before {
-    @include angleArrow;
-    top: -4px;
-    transform: rotate(45deg);
-  }
-  &::after {
-    @include angleArrow;
-    top: 4px;
-    transform: rotate(-45deg);
-  }
+
+.titleName {
+  font-size: 2rem;
+  color: #feecba;
 }
 /*BANNER END*/
 /*INTRO*/

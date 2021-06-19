@@ -1,34 +1,26 @@
 <template>
   <div>
+    <banner />
     <div>
-      <img src="@/assets/images/frontend/product.jpg" class="img-fluid">
-    </div>
-    <div>
-      <div class="text-center mt-5 mb-3">
-        <div class="titleName">產品介紹</div>
-        <div class="subName">Product Description</div>
-      </div>
-      <div class="container mt-5">
-        <ul class="list-unstyled d-flex justify-content-center flex-wrap mb-5">
-          <li class="menuItem" @click="filterCategory = ''">全部商品</li>
-          <li class="menuItem" v-for="item in categories" :key="item"
-          @click="filterCategory = item">{{ item }}</li>
+      <div class="container my-5">
+        <ul class="d-flex justify-content-center flex-wrap">
+          <li class="menuItem" @click="currentCategory = ''">全部商品</li>
+          <li
+            class="menuItem"
+            v-for="item in categories"
+            :key="item"
+            @click="currentCategory = item"
+          >
+            {{ item }}
+          </li>
         </ul>
         <div class="row">
-          <div class="col-6 col-lg-4 my-2" v-for="item in filterCategories" :key="item.id">
-            <div class="productBg text-center pb-3">
+          <div class="col-6 col-lg-4 my-4 px-4" v-for="item in filterCategories" :key="item.id">
+            <router-link :to="`/product/${item.id}`" class="productBg text-center pb-3 d-block">
               <div class="productImg" :style="`background-image: url('${item.imageUrl}');`"></div>
-              <span class="productName text-primary">{{ item.title }}</span>
+              <span class="productName">{{ item.title }}</span>
               <span class="text-light">${{ item.price }}</span>
-              <div class="mt-3">
-                <router-link :to="`/product/${ item.id }`" class="btn btn-primary mx-1">
-                  查看商品
-                </router-link>
-                <button class="btn btn-primary mx-1" @click="addToCart(item)">
-                  加入購物車
-                </button>
-              </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -36,79 +28,109 @@
   </div>
 </template>
 <script>
+import banner from "@/components/Banner.vue";
 export default {
+  components: {
+    banner
+  },
   data() {
     return {
-      products: [],
-      categories: ['電吉他', '木吉他', '烏克莉莉', '其他周邊'],
-      filterCategory: '',
-      quantity: 1,
+      products: [], // 所有產品
+      categories: [], // 所有類別
+      currentCategory: "", // 目前的類別
+      quantity: 1
     };
   },
   created() {
     this.getProducts();
   },
+  mounted() {},
   methods: {
+    getCategories() {
+      let allType = this.products.map(item => {
+        return item.category;
+      });
+      let type = allType.filter((item, idx, arr) => {
+        return arr.indexOf(item) === idx;
+      });
+      this.categories.push(...type);
+    },
     getProducts() {
       const loader = this.$loading.show();
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products`;
-      this.$http.get(api).then((res) => {
-        loader.hide();
-        this.products = res.data.data;
-      }).catch((error) => {
-        loader.hide();
-        console.log(error);
-      });
+      this.$http
+        .get(api)
+        .then(res => {
+          loader.hide();
+          this.products = res.data.data;
+          this.getCategories();
+        })
+        .catch(error => {
+          loader.hide();
+          console.log(error);
+        });
     },
     addToCart(item) {
       const cart = {
         product: item.id,
-        quantity: this.quantity,
+        quantity: this.quantity
       };
       const loader = this.$loading.show();
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.$http.post(api, cart).then(() => {
-        loader.hide();
-      }).catch((error) => {
-        loader.hide();
-        console.log(error);
-      });
-    },
+      this.$http
+        .post(api, cart)
+        .then(() => {
+          loader.hide();
+        })
+        .catch(error => {
+          loader.hide();
+          console.log(error);
+        });
+    }
   },
   computed: {
     filterCategories() {
-      if (this.filterCategory) {
-        return this.products.filter((item) => {
-          const data = item.category
-            .toLowerCase()
-            .includes(this.filterCategory.toLowerCase());
-          return data;
-        });
-      }
-      return this.products;
-    },
-  },
+      return this.products.filter(item => {
+        return item.category.includes(this.currentCategory);
+      });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 .menuItem {
-  border: 1px solid #FEECBA;
-  color: #FEECBA;
-  padding: .5rem 1rem;
+  border-color: #605e59;
+  border: 1px solid;
+  color: #95928a;
+  padding: 0.5rem 1rem;
   margin: 5px;
   min-width: 100px;
   text-align: center;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    border-color: #feecba;
+    color: #feecba;
+  }
 }
 .productBg {
   background-color: #171717;
-  border: 1px solid #707070;
+  border: 1px solid;
+  border-color: #605e59;
+  transition: all 0.4s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+    border-color: #feecba;
+    .productName {
+      color: #feecba;
+    }
+  }
 }
 .productImg {
   background-repeat: no-repeat;
   background-position-y: bottom;
   background-size: cover;
-  width: 70%;
+  width: 55%;
   height: 45vw;
   max-height: 320px;
   margin: 0 auto 20px;
@@ -116,5 +138,6 @@ export default {
 .productName {
   display: block;
   font-size: 1.2rem;
+  color: #fff;
 }
 </style>

@@ -17,69 +17,86 @@ export default {
 };
 </script>
 <style>
-html,
-body {
-  scroll-behavior: smooth;
+ul {
+  list-style: none;
 }
 @media screen and (min-width: 576px) {
   html,
   body {
-    font-size: 24px;
+    font-size: 21px;
   }
 }
 </style>
 <style lang="scss" scoped>
-::v-deep .titleName {
-  font-size: 1.2rem;
+@mixin outlineBtnHoverAngle {
+  width: 80px;
+  background-color: #feecba;
+}
+::v-deep .outlineBtn {
+  border: 1px solid #fff;
   color: #fff;
-  @media screen and (min-width: 992px) {
-    font-size: 2rem;
-  }
-}
-::v-deep .subName {
-  color: rgba(255, 255, 255, 0.1);
-  font-family: Arial;
-  font-size: 1.8rem;
-  margin-top: -5.5%;
-  white-space: nowrap;
-  @media screen and (min-width: 992px) {
-    font-size: 3rem;
-  }
-  @media screen and (min-width: 1200px) {
-    font-size: 5rem;
-  }
-}
-::v-deep .step {
-  font-size: 1.2rem;
-  color: #000;
-  background-color: #b7b7b7;
-  width: 2rem;
-  height: 2rem;
-  line-height: 2rem;
-  border-radius: 100%;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  &.active {
-    background-color: #feecba;
-  }
-}
-::v-deep .stepText {
-  color: #b7b7b7;
-  font-size: 1.2rem;
-  border-bottom: 2px solid;
-  margin: 0 0.6rem;
-  &.active {
+  padding: 10px 15px;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.4s ease;
+  &:hover {
     color: #feecba;
     border-color: #feecba;
   }
+  &:hover .angleLineLeft {
+    @include outlineBtnHoverAngle;
+  }
+  &:hover .angleLineRight {
+    @include outlineBtnHoverAngle;
+  }
+  @media screen and (min-width: 992px) {
+    font-size: 1rem;
+  }
 }
-::v-deep .stepArrow {
-  font-size: 1.8rem;
-  color: #b7b7b7;
-  margin: 0 1.5rem;
-  &.active {
-    color: #feecba;
+@mixin angleLine {
+  width: 50px;
+  height: 1px;
+  display: inline-block;
+  position: relative;
+  transition: all 0.4s ease;
+  background-color: #fff;
+}
+@mixin angleArrow {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 1px;
+  background-color: #fff;
+}
+::v-deep .angleLineLeft {
+  @include angleLine;
+  &::before {
+    @include angleArrow;
+    right: 0;
+    top: -4px;
+    transform: rotate(45deg);
+  }
+  &::after {
+    @include angleArrow;
+    right: 0;
+    top: 4px;
+    transform: rotate(-45deg);
+  }
+}
+::v-deep .angleLineRight {
+  @include angleLine;
+  &::before {
+    @include angleArrow;
+    left: 0;
+    top: -4px;
+    transform: rotate(-45deg);
+  }
+  &::after {
+    @include angleArrow;
+    left: 0;
+    top: 4px;
+    transform: rotate(45deg);
   }
 }
 ::v-deep .align-middle {

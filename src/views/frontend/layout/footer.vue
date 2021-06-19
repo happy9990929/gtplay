@@ -1,6 +1,6 @@
 <template>
   <footer class="footer text-center pt-5 pb-1" v-show="showFooter">
-    <div class="mt-5">
+    <div class="mt-5 d-block d-lg-flex justify-content-center">
       <div>
         © 2021. All Rights Reserved.
       </div>

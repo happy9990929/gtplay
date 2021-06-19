@@ -8,14 +8,14 @@
         訂單已完成，感謝您的購買。
       </div>
       <div>
-        <router-link to="/products" class="btn btn-primary text-dark mx-1">繼續購買</router-link>
+        <router-link to="/products" class="btn btn-gold text-dark mx-1">繼續購買</router-link>
       </div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 .compeletBg {
-  background-image: url('~@/assets/images/frontend/compelet.jpg');
+  background-image: url("~@/assets/images/frontend/compelet.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position-x: center;
@@ -35,14 +35,14 @@
     top: 0;
   }
   &::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: .5rem;
-    left: .5rem;
+    top: 0.5rem;
+    left: 0.5rem;
     width: 8rem;
     height: 8rem;
     border-radius: 100%;
-    background-color: #FFF;
+    background-color: #fff;
   }
 }
 </style>

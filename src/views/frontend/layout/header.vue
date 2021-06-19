@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark pt-lg-3">
     <router-link to="/" class="navbar-brand mx-auto mx-lg-5">
-      <img src="@/assets/images/frontend/logo.png" class="navLogo" />
+      <img src="@/assets/images/logo.png" class="navLogo" />
     </router-link>
     <button
       class="navbar-toggler border-0 position-absolute"
@@ -24,8 +24,10 @@
           </router-link>
         </div>
         <router-link to="/cart" class="d-none d-lg-block">
-          <div class="cartBox text-gold d-flex justify-content-center align-items-center"
-          :style="`transform: rotate3d(0, 0, 1, ${cartRotate}deg);`">
+          <div
+            class="cartBox text-gold d-flex justify-content-center align-items-center"
+            :style="`transform: rotate3d(0, 0, 1, ${cartRotate}deg);`"
+          >
             <span class="cartIcon">
               <i class="fas fa-shopping-cart"></i>
               <span class="cartNum text-white">{{ amount }}</span>
@@ -44,7 +46,7 @@ export default {
       cart: [],
       amount: 0,
       cartTotal: 0,
-      cartRotate: 0,
+      cartRotate: 0
     };
   },
   created() {
@@ -72,20 +74,23 @@ export default {
       this.cartTotal = this.cart.reduce((acc, val) => acc + val.product.price * val.quantity, 0);
     },
     scrollCart() {
-      let beforeScrollY = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+      let beforeScrollY =
+        document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
       const setRotate = () => {
-        const currentScrollY = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        const currentScrollY =
+          document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
         let isScrollDown = currentScrollY >= beforeScrollY ? true : false;
-        if(isScrollDown){ // 向下滾動
+        if (isScrollDown) {
+          // 向下滾動
           this.cartRotate += 0.5;
           beforeScrollY = currentScrollY;
-        } 
-        if(!isScrollDown) {
+        }
+        if (!isScrollDown) {
           this.cartRotate -= 0.8;
           beforeScrollY = currentScrollY;
         }
-      }
-      window.addEventListener('mousewheel', setRotate)
+      };
+      window.addEventListener("mousewheel", setRotate);
     }
   }
 };
@@ -97,7 +102,7 @@ export default {
   width: 100%;
   font-size: 0.8rem;
   z-index: 10;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 0;
   @media screen and (min-width: 992px) {
     position: absolute;
@@ -107,9 +112,9 @@ export default {
 }
 .navbar-nav {
   .nav-link {
-    &:hover{
-      background-color: rgba(0,0,0,.5);
-      color: #FEECBA;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #feecba;
       @media screen and (min-width: 992px) {
         background-color: transparent;
       }
@@ -133,7 +138,7 @@ export default {
   left: 0;
 }
 .cartBox {
-  background-color: #000;
+  background-color: #531000;
   border-radius: 100%;
   width: 80px;
   height: 80px;
@@ -148,7 +153,7 @@ export default {
   line-height: 25px;
   border-radius: 100%;
   font-size: 0.8rem;
-  background-color: #373737;
+  background-color: #000;
   display: inline-block;
   @media screen and (min-width: 992px) {
     position: absolute;

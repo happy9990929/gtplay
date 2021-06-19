@@ -8,7 +8,7 @@
             `background-color: rgba(0,0,0,${mask.opacity}); transform: translateY(${mask.translate}%);`
           "
         >
-          <img src="@/assets/images/frontend/about/GTlogo.png" class="img-fuild" />
+          <img src="@/assets/images/frontend/about/GTlogo.png" class="img-fluid px-5 px-md-0" />
         </div>
       </div>
     </div>

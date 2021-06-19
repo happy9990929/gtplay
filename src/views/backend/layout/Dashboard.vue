@@ -2,11 +2,17 @@
   <div>
     <nav class="navBar navbar navbar-dark p-0">
       <div class="logo mx-md-auto ml-md-0 my-md-0 ml-3 my-3">
-        <img src="@/assets/images/backend/logo.png" class="img-fluid"/>
+        <img src="@/assets/images/logo.png" class="img-fluid" />
       </div>
-      <button class="navbar-toggler mr-md-0 mr-3 d-md-none" type="button" data-toggle="collapse"
-      data-target="#navbarNav" aria-controls="navbarNav"
-      aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler mr-md-0 mr-3 d-md-none"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse d-md-block" id="navbarNav">
@@ -35,7 +41,7 @@
       </div>
     </nav>
     <div class="content mt-5 mt-md-0">
-      <router-view v-if="loginSuccess" :token="token"/>
+      <router-view v-if="loginSuccess" :token="token" />
     </div>
   </div>
 </template>
@@ -43,8 +49,8 @@
 export default {
   data() {
     return {
-      token: '',
-      loginSuccess: false,
+      token: "",
+      loginSuccess: false
     };
   },
   created() {
@@ -54,33 +60,36 @@ export default {
     checkLogin() {
       const loader = this.$loading.show();
       // 取得token
-      this.token = document.cookie.replace(/(?:(?:^|.*;\s*)mytoken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+      this.token = document.cookie.replace(/(?:(?:^|.*;\s*)mytoken\s*=\s*([^;]*).*$)|^.*$/, "$1");
       this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
       // 驗證
       const api = `${process.env.VUE_APP_APIPATH}/api/auth/check`;
-      this.$http.post(api, { api_token: this.token }).then((res) => {
-        loader.hide();
-        if (res.data.success === true) {
-          this.loginSuccess = true;
-        }
-      }).catch((error) => {
-        loader.hide();
-        console.log(error);
-        this.$router.push('/login');
-      });
+      this.$http
+        .post(api, { api_token: this.token })
+        .then(res => {
+          loader.hide();
+          if (res.data.success === true) {
+            this.loginSuccess = true;
+          }
+        })
+        .catch(error => {
+          loader.hide();
+          console.log(error);
+          this.$router.push("/login");
+        });
     },
     logout() {
-      document.cookie = 'mytoken=;expires=';
-      this.$router.push('/login');
-    },
-  },
+      document.cookie = "mytoken=;expires=";
+      this.$router.push("/login");
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .logo {
   width: 100px;
-  @media screen and (min-width:768px) {
+  @media screen and (min-width: 768px) {
     width: 170px;
   }
 }
@@ -91,7 +100,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 10;
-  @media screen and (min-width:768px) {
+  @media screen and (min-width: 768px) {
     bottom: 0;
     width: 260px;
   }
@@ -99,31 +108,31 @@ export default {
 .navItem {
   color: #8391a2;
   width: 100%;
-  padding: .5rem 0 .5rem 35%;
-  transition: all .2s ease;
+  padding: 0.5rem 0 0.5rem 35%;
+  transition: all 0.2s ease;
   cursor: pointer;
-  @media screen and (min-width:768px) {
+  @media screen and (min-width: 768px) {
     width: 75%;
-    padding: .8rem;
-    margin: .5rem auto;
+    padding: 0.8rem;
+    margin: 0.5rem auto;
   }
   &:hover {
     color: #cedce4;
     background-color: #424d5a;
-    @media screen and (min-width:768px) {
+    @media screen and (min-width: 768px) {
       background-color: initial;
     }
   }
   &.router-link-active {
     color: #ffffff;
     background-color: #424d5a;
-    @media screen and (min-width:768px) {
+    @media screen and (min-width: 768px) {
       background-color: initial;
     }
   }
 }
 ::v-deep .btn-orange {
-  box-shadow: 0 2px 6px 0 rgba(250, 165, 92, .7);
+  box-shadow: 0 2px 6px 0 rgba(250, 165, 92, 0.7);
   &:hover {
     background-color: #ff8d17;
     border-color: transparent;
@@ -131,7 +140,7 @@ export default {
 }
 ::v-deep .card {
   border: none;
-  box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+  box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
   margin-bottom: 24px;
   background-color: #222;
 }
@@ -139,7 +148,8 @@ export default {
   background-color: #f1f3fa;
   border-color: #eef2f7;
 }
-::v-deep .table th, ::v-deep .table td {
+::v-deep .table th,
+::v-deep .table td {
   vertical-align: middle;
   border-top: 1px solid #383838;
 }
@@ -155,7 +165,7 @@ export default {
 }
 ::v-deep .page-link {
   display: block;
-  padding: .5rem .75rem;
+  padding: 0.5rem 0.75rem;
   line-height: 1.25;
   color: #313a46;
   background-color: #fff;
@@ -170,10 +180,9 @@ export default {
     }
   }
 }
-.content  {
-@media screen and (min-width:768px){
-  margin-left: 260px;
+.content {
+  @media screen and (min-width: 768px) {
+    margin-left: 260px;
+  }
 }
-}
-
 </style>
