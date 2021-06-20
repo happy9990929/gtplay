@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-import footerInfo from "./footer.vue";
-import headerMenu from "./header.vue";
+import footerInfo from "./Footer.vue";
+import headerMenu from "./Header.vue";
 
 export default {
   components: {
@@ -19,6 +19,7 @@ export default {
 <style>
 ul {
   list-style: none;
+  padding: 0;
 }
 @media screen and (min-width: 576px) {
   html,

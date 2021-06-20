@@ -14,7 +14,7 @@
             <th>操作</th>
           </thead>
           <tbody class="tbody">
-            <tr v-for="item in cart" :key="item.id">
+            <tr v-for="item in getCart" :key="item.id">
               <td>
                 <div
                   class="cartItem"
@@ -37,9 +37,9 @@
           <tfoot class="tfoot text-right">
             <td colspan="6">
               <span>
-                總共 <span class="text-gold">{{ amount }}</span> 件商品
+                總共 <span class="text-gold">{{ getCartAmount }}</span> 件商品
               </span>
-              <span class="h5 text-gold mx-3 total"> 總金額 ${{ cartTotal }} </span>
+              <span class="h5 text-gold mx-3 total"> 總金額 ${{ getCartTotal }} </span>
             </td>
           </tfoot>
         </table>
@@ -58,7 +58,8 @@
   </main>
 </template>
 <script>
-import cartStep from "@/components/cartStep.vue";
+import { mapActions, mapGetters } from "vuex";
+import cartStep from "@/components/CartStep.vue";
 import banner from "@/components/Banner.vue";
 
 export default {
@@ -66,52 +67,17 @@ export default {
     cartStep,
     banner
   },
-  data() {
-    return {
-      cart: [],
-      amount: 0,
-      cartTotal: 0
-    };
+  computed: {
+    ...mapGetters(["getCart", "getCartAmount", "getCartTotal"])
   },
   created() {
-    this.getCart();
+    this.$store.dispatch("handCart");
   },
   methods: {
-    getCart() {
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.$http
-        .get(api)
-        .then(res => {
-          loader.hide();
-          console.log(res);
-          this.cart = res.data.data;
-          this.cartAmount();
-        })
-        .catch(error => {
-          loader.hide();
-          console.log(error);
-        });
-    },
-    cartAmount() {
-      this.amount = this.cart.reduce((acc, val) => acc + val.quantity, 0);
-      this.cartTotal = this.cart.reduce((acc, val) => acc + val.product.price * val.quantity, 0);
-    },
+    ...mapActions(["handCart", "handDeleteCart"]),
     deleteCart(item) {
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping/${item.product.id}`;
-      this.$http
-        .delete(api)
-        .then(res => {
-          loader.hide();
-          this.getCart();
-          this.cartAmount();
-          console.log(res);
-        })
-        .catch(error => {
-          loader.hide();
-          console.log(error);
-        });
+      console.log(item);
+      this.$store.dispatch("handDeleteCart", item);
     }
   }
 };

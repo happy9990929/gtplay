@@ -100,10 +100,14 @@
               <span class="angleLineRight mr-2"></span>
               上一步
             </router-link>
-            <button type="submit" class="outlineBtn" :disabled="invalid">
+            <button type="button" @click="submitForm" class="outlineBtn" :disabled="invalid">
               下一步
               <span class="angleLineLeft ml-2"></span>
             </button>
+            <!-- <router-link to="/checkout" class="outlineBtn" :disabled="invalid">
+              下一步
+              <span class="angleLineLeft ml-2"></span>
+            </router-link> -->
           </div>
         </form>
       </validation-observer>
@@ -112,8 +116,9 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import banner from "@/components/Banner.vue";
-import cartStep from "@/components/cartStep.vue";
+import cartStep from "@/components/CartStep.vue";
 
 export default {
   components: {
@@ -134,36 +139,41 @@ export default {
     };
   },
   methods: {
-    getCart() {
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.$http
-        .get(api)
-        .then(res => {
-          loader.hide();
-          console.log(res);
-          this.cart = res.data.data;
-        })
-        .catch(error => {
-          loader.hide();
-          console.log(error);
-        });
-    },
+    // getCart() {
+    //   const loader = this.$loading.show();
+    //   const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
+    //   this.$http
+    //     .get(api)
+    //     .then(res => {
+    //       loader.hide();
+    //       console.log(res);
+    //       this.cart = res.data.data;
+    //     })
+    //     .catch(error => {
+    //       loader.hide();
+    //       console.log(error);
+    //     });
+    // },
+    ...mapActions(["handOrders"]),
     submitForm() {
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders`;
-      this.$http
-        .post(api, this.form)
-        .then(res => {
-          loader.hide();
-          this.getCart();
-          this.$router.push(`checkout/${res.data.data.id}`);
-          console.log(res);
-        })
-        .catch(error => {
-          loader.hide();
-          console.log(error);
-        });
+      this.$store.dispatch("handOrders");
+      // 儲存到 sessionStorage
+      sessionStorage.setItem("form", JSON.stringify(this.form));
+      this.$router.push("/checkout");
+      // const loader = this.$loading.show();
+      // const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders`;
+      // this.$http
+      //   .post(api, this.form)
+      //   .then(res => {
+      //     loader.hide();
+      //     this.$store.dispatch("handCart");
+      //     this.$router.push(`checkout/${res.data.data.id}`);
+      //     console.log(res);
+      //   })
+      //   .catch(error => {
+      //     loader.hide();
+      //     console.log(error);
+      //   });
     }
   }
 };

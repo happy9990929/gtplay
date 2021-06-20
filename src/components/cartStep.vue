@@ -23,9 +23,6 @@
 
 <script>
 export default {
-  mounted() {
-    console.log(this.$route.name);
-  },
   computed: {
     cartActive() {
       return this.$route.name === "Cart" ? "active" : "";

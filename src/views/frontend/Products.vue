@@ -4,11 +4,16 @@
     <div>
       <div class="container my-5">
         <ul class="d-flex justify-content-center flex-wrap">
-          <li class="menuItem" @click="currentCategory = ''">全部商品</li>
           <li
-            class="menuItem"
+            :class="['menuItem', { active: currentCategory === '' }]"
+            @click="currentCategory = ''"
+          >
+            全部商品
+          </li>
+          <li
             v-for="item in categories"
             :key="item"
+            :class="['menuItem', { active: currentCategory === item }]"
             @click="currentCategory = item"
           >
             {{ item }}
@@ -28,6 +33,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import banner from "@/components/Banner.vue";
 export default {
   components: {
@@ -37,14 +43,15 @@ export default {
     return {
       products: [], // 所有產品
       categories: [], // 所有類別
-      currentCategory: "", // 目前的類別
-      quantity: 1
+      currentCategory: "" // 目前的類別
     };
   },
   created() {
-    this.getProducts();
+    this.$store.dispatch("handProducts").then(res => {
+      this.products = res; // 取得產品
+      this.getCategories(); // 取得類別
+    });
   },
-  mounted() {},
   methods: {
     getCategories() {
       let allType = this.products.map(item => {
@@ -55,38 +62,7 @@ export default {
       });
       this.categories.push(...type);
     },
-    getProducts() {
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products`;
-      this.$http
-        .get(api)
-        .then(res => {
-          loader.hide();
-          this.products = res.data.data;
-          this.getCategories();
-        })
-        .catch(error => {
-          loader.hide();
-          console.log(error);
-        });
-    },
-    addToCart(item) {
-      const cart = {
-        product: item.id,
-        quantity: this.quantity
-      };
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.$http
-        .post(api, cart)
-        .then(() => {
-          loader.hide();
-        })
-        .catch(error => {
-          loader.hide();
-          console.log(error);
-        });
-    }
+    ...mapActions(["handProducts"])
   },
   computed: {
     filterCategories() {
@@ -109,6 +85,10 @@ export default {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   &:hover {
+    border-color: #feecba;
+    color: #feecba;
+  }
+  &.active {
     border-color: #feecba;
     color: #feecba;
   }

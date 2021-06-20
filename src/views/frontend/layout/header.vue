@@ -7,20 +7,20 @@
       class="navbar-toggler border-0 position-absolute"
       type="button"
       data-toggle="collapse"
-      data-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup"
+      data-target="#navbar"
+      aria-controls="navbar"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbar">
       <div class="navbar-nav text-center">
         <div class="d-lg-flex">
           <router-link class="nav-link text-primary mx-md-3" to="/about">關於我們</router-link>
           <router-link class="nav-link text-primary mx-md-3" to="/products">產品列表</router-link>
           <router-link class="nav-link text-primary mx-md-3 d-lg-none" to="/cart">
-            購物車<span class="cartNum text-white ml-1 ml-lg-0">{{ amount }}</span>
+            購物車<span class="cartNum text-white ml-1 ml-lg-0">{{ getCartAmount }}</span>
           </router-link>
         </div>
         <router-link to="/cart" class="d-none d-lg-block">
@@ -30,7 +30,7 @@
           >
             <span class="cartIcon">
               <i class="fas fa-shopping-cart"></i>
-              <span class="cartNum text-white">{{ amount }}</span>
+              <span class="cartNum text-white">{{ getCartAmount }}</span>
             </span>
           </div>
         </router-link>
@@ -40,39 +40,22 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      cart: [],
-      amount: 0,
-      cartTotal: 0,
-      cartRotate: 0
+      cartRotate: 0 // 右上購物車按鈕旋轉角度
     };
   },
+  computed: {
+    ...mapGetters(["getCartAmount", "getCartTotal"])
+  },
   created() {
-    this.getCart();
+    this.$store.dispatch("handCart");
     this.scrollCart();
   },
   methods: {
-    getCart() {
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.$http
-        .get(api)
-        .then(res => {
-          loader.hide();
-          this.cart = res.data.data;
-          this.cartAmount();
-        })
-        .catch(error => {
-          loader.hide();
-          console.log(error);
-        });
-    },
-    cartAmount() {
-      this.amount = this.cart.reduce((acc, val) => acc + val.quantity, 0);
-      this.cartTotal = this.cart.reduce((acc, val) => acc + val.product.price * val.quantity, 0);
-    },
+    ...mapActions(["handCart"]),
     scrollCart() {
       let beforeScrollY =
         document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;

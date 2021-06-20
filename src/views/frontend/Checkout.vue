@@ -7,8 +7,8 @@
         <div class="row p-3">
           <div
             class="col-12 col-sm-6 d-flex align-items-center justify-content-center my-3"
-            v-for="item in order.products"
-            :key="item + 1"
+            v-for="item in getCart"
+            :key="item.product.title"
           >
             <div
               class="productImg"
@@ -28,37 +28,37 @@
             <div class="col-12 col-lg-6 px-4 py-3 text-break border-right border-light">
               <div class="row my-3">
                 <div class="col-5 col-lg-4">姓名</div>
-                <div class="col-7 col-lg-8 text-primary">{{ order.user.name }}</div>
+                <div class="col-7 col-lg-8 text-primary">{{ orderForm.name }}</div>
               </div>
               <div class="row my-3">
                 <div class="col-5 col-lg-4">電話</div>
-                <div class="col-7 col-lg-8 text-primary">{{ order.user.tel }}</div>
+                <div class="col-7 col-lg-8 text-primary">{{ orderForm.tel }}</div>
               </div>
               <div class="row my-3">
                 <div class="col-5 col-lg-4">E-mail</div>
-                <div class="col-7 col-lg-8 text-primary">{{ order.user.email }}</div>
+                <div class="col-7 col-lg-8 text-primary">{{ orderForm.email }}</div>
               </div>
               <div class="row my-3">
                 <div class="col-5 col-lg-4">地址</div>
-                <div class="col-7 col-lg-8 text-primary">{{ order.user.address }}</div>
+                <div class="col-7 col-lg-8 text-primary">{{ orderForm.address }}</div>
               </div>
               <div class="row my-3">
                 <div class="col-5 col-lg-4">付款方式</div>
-                <div class="col-7 col-lg-8 text-primary">{{ order.payment }}</div>
+                <div class="col-7 col-lg-8 text-primary">{{ orderForm.payment }}</div>
               </div>
               <div class="row my-3">
                 <div class="col-5 col-lg-4">留言</div>
-                <div class="col-7 col-lg-8 text-primary">{{ order.message }}</div>
+                <div class="col-7 col-lg-8 text-primary">{{ orderForm.message }}</div>
               </div>
             </div>
             <div class="col-12 col-lg-6 px-4 py-3">
               <div class="px-2 py-2">
-                總共 <span class="text-gold">{{ order.products.length }}</span> 件商品
+                總共 <span class="text-gold">{{ getCartAmount }}</span> 件商品
               </div>
               <div class="border-top border-bottom border-light py-2">
                 <div class="d-flex justify-content-between px-2 py-1">
                   <span>小計</span>
-                  <span class="text-gold">{{ order.amount }}</span>
+                  <span class="text-gold">{{ getCartTotal }}</span>
                 </div>
                 <div class="d-flex justify-content-between px-2 py-1">
                   <span>運費</span>
@@ -67,7 +67,7 @@
               </div>
               <div class="d-flex justify-content-between px-2 py-2">
                 <span>總金額</span>
-                <span class="text-gold">{{ order.amount + 60 }}</span>
+                <span class="text-gold">{{ getCartTotal + 60 }}</span>
               </div>
             </div>
           </div>
@@ -84,8 +84,9 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import banner from "@/components/Banner.vue";
-import cartStep from "@/components/cartStep.vue";
+import cartStep from "@/components/CartStep.vue";
 
 export default {
   components: {
@@ -94,28 +95,34 @@ export default {
   },
   data() {
     return {
-      order: []
+      // order: []
+      orderForm: {}
     };
   },
-  created() {
-    this.getOrder();
+  computed: {
+    ...mapGetters(["getCart", "getCartAmount", "getCartTotal"])
   },
+  created() {
+    // this.getOrder();
+    this.orderForm = JSON.parse(sessionStorage.getItem("form"));
+  },
+  mounted() {},
   methods: {
-    getOrder() {
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders/${this.$route.params.id}`;
-      this.$http
-        .get(api)
-        .then(res => {
-          loader.hide();
-          this.order = res.data.data;
-          console.log(res);
-        })
-        .catch(error => {
-          loader.hide();
-          console.log(error);
-        });
-    }
+    // getOrder() {
+    //   const loader = this.$loading.show();
+    //   const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders/${this.$route.params.id}`;
+    //   this.$http
+    //     .get(api)
+    //     .then(res => {
+    //       loader.hide();
+    //       this.order = res.data.data;
+    //       console.log(res);
+    //     })
+    //     .catch(error => {
+    //       loader.hide();
+    //       console.log(error);
+    //     });
+    // }
   }
 };
 </script>
