@@ -73,11 +73,15 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-end my-3">
-        <router-link to="/complete" class="outlineBtn">
+      <div class="d-flex justify-content-between my-3">
+        <router-link to="/info" class="outlineBtn">
+          <span class="angleLineRight mr-2"></span>
+          上一步
+        </router-link>
+        <button type="button" class="outlineBtn" @click="checkOut">
           確認付款
           <span class="angleLineLeft ml-2"></span>
-        </router-link>
+        </button>
       </div>
     </div>
   </main>
@@ -95,7 +99,6 @@ export default {
   },
   data() {
     return {
-      // order: []
       orderForm: {}
     };
   },
@@ -103,26 +106,18 @@ export default {
     ...mapGetters(["getCart", "getCartAmount", "getCartTotal"])
   },
   created() {
-    // this.getOrder();
     this.orderForm = JSON.parse(sessionStorage.getItem("form"));
   },
   mounted() {},
   methods: {
-    // getOrder() {
-    //   const loader = this.$loading.show();
-    //   const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders/${this.$route.params.id}`;
-    //   this.$http
-    //     .get(api)
-    //     .then(res => {
-    //       loader.hide();
-    //       this.order = res.data.data;
-    //       console.log(res);
-    //     })
-    //     .catch(error => {
-    //       loader.hide();
-    //       console.log(error);
-    //     });
-    // }
+    ...mapActions(["handOrders"]),
+    checkOut() {
+      console.log(this.orderForm);
+      this.$store.dispatch("handOrders", this.orderForm).then(() => {
+        this.$router.push("/complete");
+        sessionStorage.removeItem("form");
+      });
+    }
   }
 };
 </script>

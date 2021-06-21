@@ -67,6 +67,20 @@ const store = new Vuex.Store({
           loader.hide();
           console.log(error);
         });
+    },
+    handOrders({ commit }, payload) {
+      const loader = Vue.$loading.show();
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders`;
+      axios
+        .post(api, payload)
+        .then(() => {
+          store.dispatch("handCart");
+          loader.hide();
+        })
+        .catch(error => {
+          loader.hide();
+          console.log(error);
+        });
     }
   },
   getters: {

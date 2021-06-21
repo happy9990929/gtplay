@@ -1,4 +1,5 @@
-import { getProductsRequest, getShoppingRequest } from "./api.js";
+import { getProductsRequest, getShoppingRequest, getOrdersRequest } from "./api.js";
 const apiGetProductsRequest = getProductsRequest;
 const apiGetShoppingRequest = getShoppingRequest;
-export { apiGetProductsRequest, apiGetShoppingRequest };
+const apiGetOrdersRequest = getOrdersRequest;
+export { apiGetProductsRequest, apiGetShoppingRequest, apiGetOrdersRequest };

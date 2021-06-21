@@ -5,5 +5,4 @@ const request = axios.create({
 
 const getProductsRequest = () => request.get("/products");
 const getShoppingRequest = () => request.get("/shopping");
-// const getOrdersRequest = () => request.post("/orders");
 export { getProductsRequest, getShoppingRequest };
