@@ -44,6 +44,7 @@
           </tfoot>
         </table>
       </div>
+
       <div class="d-flex justify-content-between">
         <router-link to="/products" class="outlineBtn">
           <span class="angleLineRight mr-2"></span>
