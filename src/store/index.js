@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
+import "vue-loading-overlay/dist/vue-loading.min.css";
 Vue.use(Loading);
 Vue.use(Vuex);
 import {

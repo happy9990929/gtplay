@@ -6,7 +6,7 @@ import VueAxios from "vue-axios";
 
 // Loading 套件
 import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
+import "vue-loading-overlay/dist/vue-loading.min.css";
 
 // SuperSlide
 import VueSuperSlide from "vue-superslide";
