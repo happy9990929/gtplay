@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import banner from "@/components/Banner.vue";
 import cartStep from "@/components/CartStep.vue";
 
@@ -110,7 +110,6 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(["handOrders"]),
     checkOut() {
       console.log(this.orderForm);
       this.$store.dispatch("handOrders", this.orderForm).then(() => {

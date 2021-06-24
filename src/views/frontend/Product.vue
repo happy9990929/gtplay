@@ -4,41 +4,52 @@
       <div class="productBox position-relative py-3 py-xl-0">
         <div class="productItem">
           <div class="productItemImg">
-            <img :src="`${product.imageUrl}`" class="img-fluid">
+            <img :src="`${getProduct.imageUrl}`" class="img-fluid" />
           </div>
         </div>
         <div class="watermark">
-          <div class="d-flex align-items-center">{{ product.title }}</div>
+          <div class="d-flex align-items-center">{{ getProduct.title }}</div>
         </div>
       </div>
       <div class="productInfo p-3 p-xl-5 d-xl-flex align-items-xl-center">
         <div class="w-100">
           <div class="border-bottom border-secondary pb-2">
             <div class="productTitle font-weight-bold">
-              {{ product.title }}
+              {{ getProduct.title }}
             </div>
-            {{ product.description }}
+            {{ getProduct.description }}
           </div>
           <div class="py-3 border-bottom border-secondary">
             <div class="d-flex align-items-center mb-3">
-              顏色:
+              介紹:
               <div class="d-flex ml-3">
-                <div class="colorItem blue"></div>
-                <div class="colorItem red"></div>
+                {{ getProduct.content }}
               </div>
             </div>
             <div class="d-flex align-items-center">
               <div>數量:</div>
               <div class="d-flex align-items-center">
                 <div class="d-flex mx-3">
-                  <button type="button" class="btn border border-secondary rounded-0 py-0"
-                  @click="updateCart(product.id, product.num-1)">
+                  <button
+                    type="button"
+                    class="btn border border-secondary rounded-0 py-0"
+                    @click="setQuantity(num - 1)"
+                  >
                     <i class="fas fa-minus"></i>
                   </button>
-                  <input type="number" class="numInput border-left-0 border-right-0 border-secondary
-                  text-center" :value="product.num"/>
-                  <button type="button" class="btn border border-secondary rounded-0 py-0"
-                  @click="updateCart(product.id, product.num+1)">
+                  <input
+                    type="number"
+                    class="numInput border-left-0 border-right-0 border-secondary
+                  text-center"
+                    min="1"
+                    max="10"
+                    v-model="num"
+                  />
+                  <button
+                    type="button"
+                    class="btn border border-secondary rounded-0 py-0"
+                    @click="setQuantity(num + 1)"
+                  >
                     <i class="fas fa-plus"></i>
                   </button>
                 </div>
@@ -47,8 +58,8 @@
             </div>
           </div>
           <div class="py-3 d-flex align-items-center justify-content-between">
-            <div class="text-danger h4">NT ${{ product.price }}</div>
-            <button class="btn addCart" @click="addToCart(product.id, product.num)">
+            <div class="text-danger h4">NT ${{ getProduct.price }}</div>
+            <button class="btn addCart" @click="addToCart">
               <i class="fas fa-shopping-cart"></i>
               加入購物車
             </button>
@@ -93,75 +104,41 @@
   </main>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      product: {
-        num: 1,
-        imageUrl: [],
-      },
-      cart: [],
+      num: 1 // 數量
     };
   },
+  computed: {
+    ...mapGetters(["getProduct", "getCart"])
+  },
   created() {
-    this.getProduct();
-    // console.log(this.$route);
+    // this.getProduct();
+    this.$store.dispatch("handProduct", this.$route.params.id);
   },
   methods: {
-    getProduct() {
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/product/${this.$route.params.id}`;
-      this.$http.get(api).then((res) => {
-        loader.hide();
-        this.product = {
-          ...res.data.data,
-          num: 1,
-        };
-      }).catch((error) => {
-        loader.hide();
-        console.log(error);
-      });
-    },
-    getCart() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.$http.get(api).then((res) => {
-        this.cart = res.data.data;
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-    addToCart(id, quantity = 1) {
+    addToCart() {
       const cart = {
-        product: id,
-        quantity,
+        product: this.getProduct.id,
+        quantity: this.num
       };
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.$http.post(api, cart).then(() => {
-        loader.hide();
-        this.getCart();
-      }).catch((error) => {
-        loader.hide();
-        console.log(error);
+      let cartIdArr = this.getCart.map(item => {
+        return item.product.id;
       });
+      if (cartIdArr.includes(cart.product)) {
+        this.$store.dispatch("handPatchCart", cart);
+      } else {
+        this.$store.dispatch("handPostCart", cart);
+      }
     },
-    updateCart(id, quantity) {
-      const cart = {
-        product: id,
-        quantity,
-      };
-      this.product.num = quantity;
-      const loader = this.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.$http.patch(api, cart).then(() => {
-        loader.hide();
-        this.getCart();
-      }).catch((error) => {
-        loader.hide();
-        console.log(error);
-      });
-    },
-  },
+    // 數量按鈕
+    setQuantity(quantity) {
+      quantity = quantity < 0 ? 0 : quantity;
+      this.num = quantity;
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -188,7 +165,7 @@ export default {
   bottom: 0;
   font-size: 6rem;
   white-space: nowrap;
-  color: rgba(255,255,255,.1);
+  color: rgba(255, 255, 255, 0.1);
   font-weight: bold;
   height: 100%;
   width: 100%;
@@ -197,7 +174,7 @@ export default {
   overflow: hidden;
 }
 .productInfo {
-  background-color: #FEECBA;
+  background-color: #feecba;
   color: #000;
 }
 .productTitle {
@@ -207,7 +184,7 @@ export default {
   border-radius: 100%;
   width: 1.2rem;
   height: 1.2rem;
-  margin: 0 .25rem;
+  margin: 0 0.25rem;
   &.blue {
     background-color: blue;
   }
@@ -236,7 +213,7 @@ export default {
   background-repeat: no-repeat;
   background-position-y: bottom;
   background-size: cover;
-  background-image: url('~@/assets/images/frontend/1.png');
+  background-image: url("~@/assets/images/frontend/1.png");
   width: 70%;
   height: 45vw;
   max-height: 320px;

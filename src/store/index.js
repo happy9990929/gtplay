@@ -5,11 +5,24 @@ import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 Vue.use(Loading);
 Vue.use(Vuex);
-import { apiGetProductsRequest, apiGetShoppingRequest } from "@/api";
+import {
+  apiGetProductsRequest,
+  apiGetProductRequest,
+  apiGetCartRequest,
+  apiPostCartRequest,
+  apiPatchCartRequest,
+  apiDeleteCartRequest,
+  apiPostOrdersRequest
+} from "@/api";
 
 const store = new Vuex.Store({
   state: {
     products: [], // 所有產品
+    // 單一產品
+    product: {
+      num: 1,
+      imageUrl: []
+    },
     cart: [], // 購物車
     cartAmount: 0, // 購物車產品總數量
     cartTotal: 0 // 購物車產品總金額
@@ -26,6 +39,12 @@ const store = new Vuex.Store({
     },
     setCartTotal(state) {
       state.cartTotal = state.cart.reduce((acc, val) => acc + val.product.price * val.quantity, 0);
+    },
+    setProduct(state, payload) {
+      state.product = {
+        ...payload,
+        num: 1
+      };
     }
   },
   actions: {
@@ -40,9 +59,22 @@ const store = new Vuex.Store({
         console.log(error.response.data);
       }
     },
+    handProduct({ commit }, payload) {
+      const loader = Vue.$loading.show();
+      const getProduct = apiGetProductRequest(payload);
+      getProduct
+        .then(res => {
+          commit("setProduct", res.data.data);
+          loader.hide();
+        })
+        .catch(error => {
+          loader.hide();
+          console.log(error);
+        });
+    },
     handCart({ commit }) {
       const loader = Vue.$loading.show();
-      const res = apiGetShoppingRequest();
+      const res = apiGetCartRequest();
       res
         .then(res => {
           commit("setCart", res.data.data);
@@ -54,11 +86,10 @@ const store = new Vuex.Store({
           console.log(err);
         });
     },
-    handDeleteCart(context, item) {
+    handPostCart({ commit }, payload) {
       const loader = Vue.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping/${item.product.id}`;
-      axios
-        .delete(api)
+      const postCart = apiPostCartRequest(payload);
+      postCart
         .then(() => {
           store.dispatch("handCart");
           loader.hide();
@@ -68,11 +99,36 @@ const store = new Vuex.Store({
           console.log(error);
         });
     },
-    handOrders({ commit }, payload) {
+    handPatchCart({ commit }, payload) {
       const loader = Vue.$loading.show();
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders`;
-      axios
-        .post(api, payload)
+      const patchCart = apiPatchCartRequest(payload);
+      patchCart
+        .then(() => {
+          store.dispatch("handCart");
+          loader.hide();
+        })
+        .catch(error => {
+          loader.hide();
+          console.log(error);
+        });
+    },
+    handDeleteCart(context, item) {
+      const loader = Vue.$loading.show();
+      const delCart = apiDeleteCartRequest(item.product.id);
+      delCart
+        .then(() => {
+          store.dispatch("handCart");
+          loader.hide();
+        })
+        .catch(error => {
+          loader.hide();
+          console.log(error);
+        });
+    },
+    handOrders(context, payload) {
+      const loader = Vue.$loading.show();
+      const postOrder = apiPostOrdersRequest(payload);
+      postOrder
         .then(() => {
           store.dispatch("handCart");
           loader.hide();
@@ -86,6 +142,9 @@ const store = new Vuex.Store({
   getters: {
     getProducts(state) {
       return state.products;
+    },
+    getProduct(state) {
+      return state.product;
     },
     getCart(state) {
       return state.cart;

@@ -33,7 +33,6 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
 import banner from "@/components/Banner.vue";
 export default {
   components: {
@@ -61,8 +60,7 @@ export default {
         return arr.indexOf(item) === idx;
       });
       this.categories.push(...type);
-    },
-    ...mapActions(["handProducts"])
+    }
   },
   computed: {
     filterCategories() {

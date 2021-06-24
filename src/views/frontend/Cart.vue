@@ -59,7 +59,7 @@
   </main>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import cartStep from "@/components/CartStep.vue";
 import banner from "@/components/Banner.vue";
 
@@ -75,7 +75,6 @@ export default {
     this.$store.dispatch("handCart");
   },
   methods: {
-    ...mapActions(["handCart", "handDeleteCart"]),
     deleteCart(item) {
       console.log(item);
       this.$store.dispatch("handDeleteCart", item);

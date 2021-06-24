@@ -85,7 +85,10 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 }; //路由切換時，期望滾動到的滾輪位置;
+  }
 });
 
 export default router;

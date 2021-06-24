@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -55,7 +55,6 @@ export default {
     this.scrollCart();
   },
   methods: {
-    ...mapActions(["handCart"]),
     scrollCart() {
       let beforeScrollY =
         document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
