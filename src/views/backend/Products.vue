@@ -394,7 +394,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~vue2-editor/dist/vue2-editor.css";
 .productImg {
   width: 100%;
   min-width: 100px;

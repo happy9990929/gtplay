@@ -21,7 +21,7 @@
           </div>
           <div class="py-3 border-bottom border-secondary">
             <div class="d-flex mb-3">
-              介紹:
+              <div>介紹:</div>
               <div class="ml-3 content" v-html="getProduct.content"></div>
             </div>
             <div class="d-flex align-items-center">
@@ -130,6 +130,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 ::v-deep .content {
+  flex: 1;
   p {
     margin-bottom: 0;
   }
