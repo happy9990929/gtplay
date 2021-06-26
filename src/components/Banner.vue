@@ -1,7 +1,7 @@
 <template>
   <div
     class="inpageBanner align-items-center align-items-lg-end"
-    :style="`background-image: url('/images/${bannerImg}.jpg');`"
+    :style="`background-image: url('${publicPath}images/${bannerImg}.jpg');`"
   >
     <div class="text-center mt-5 mb-lg-5 animate__animated animate__bounceIn">
       <div class="titleName">{{ cnTitle }}</div>
@@ -12,6 +12,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      publicPath: process.env.BASE_URL
+    };
+  },
   computed: {
     cnTitle() {
       switch (this.$route.name) {

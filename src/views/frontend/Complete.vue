@@ -1,7 +1,10 @@
 <template>
   <div class="compeletBg text-center">
-    <div class="ml-md-5">
-      <div class="successIcon text-success position-relative mx-auto mb-3">
+    <div class="ml-md-5 animate__animated animate__fadeInUp">
+      <div
+        class="successIcon text-success position-relative mx-auto mb-3 
+        animate__animated animate__bounceIn animate__delay-1s"
+      >
         <i class="fas fa-check-circle"></i>
       </div>
       <div class="h4 text-primary mt-3 mb-5">
