@@ -20,40 +20,27 @@
             {{ getProduct.description }}
           </div>
           <div class="py-3 border-bottom border-secondary">
-            <div class="d-flex align-items-center mb-3">
+            <div class="d-flex mb-3">
               介紹:
-              <div class="d-flex ml-3">
-                {{ getProduct.content }}
-              </div>
+              <div class="ml-3 content" v-html="getProduct.content"></div>
             </div>
             <div class="d-flex align-items-center">
               <div>數量:</div>
               <div class="d-flex align-items-center">
                 <div class="d-flex mx-3">
-                  <button
-                    type="button"
-                    class="btn border border-secondary rounded-0 py-0"
-                    @click="setQuantity(num - 1)"
-                  >
+                  <button type="button" class="numBtn" @click="setQuantity">
                     <i class="fas fa-minus"></i>
                   </button>
                   <input
                     type="number"
                     class="numInput border-left-0 border-right-0 border-secondary
                   text-center"
-                    min="1"
-                    max="10"
                     v-model="num"
                   />
-                  <button
-                    type="button"
-                    class="btn border border-secondary rounded-0 py-0"
-                    @click="setQuantity(num + 1)"
-                  >
+                  <button type="button" class="numBtn" @click="num++">
                     <i class="fas fa-plus"></i>
                   </button>
                 </div>
-                <!-- <div>還剩22件</div> -->
               </div>
             </div>
           </div>
@@ -134,14 +121,19 @@ export default {
       }
     },
     // 數量按鈕
-    setQuantity(quantity) {
-      quantity = quantity < 0 ? 0 : quantity;
-      this.num = quantity;
+    setQuantity() {
+      this.num--;
+      this.num = this.num < 0 ? 0 : this.num;
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+::v-deep .content {
+  p {
+    margin-bottom: 0;
+  }
+}
 .productBox {
   background-color: #000;
   width: 100%;
@@ -197,9 +189,24 @@ export default {
   border-width: 1px;
   background-color: transparent;
 }
+.numBtn {
+  color: #feecba;
+  border: 1px solid #570000;
+  background-color: #531000;
+  &:hover {
+    color: #feecba;
+    border: 1px solid #531000;
+    background-color: #000;
+  }
+}
 .addCart {
   color: #570000;
   border: 1px solid #570000;
+  &:hover {
+    color: #feecba;
+    border: 1px solid #feecba;
+    background-color: #000;
+  }
 }
 .otherProducts {
   background-color: #171717;

@@ -182,7 +182,7 @@
                 </div>
                 <div class="form-group">
                   <label for="content">產品描述</label>
-                  <VueEditor v-model="temProduct.content" />
+                  <VueEditor v-model="temProduct.content" :editorToolbar="customToolbar" />
                 </div>
                 <div class="form-group">
                   <div class="form-check">
@@ -262,7 +262,15 @@ export default {
       isNew: false,
       status: {
         fileUploading: false
-      }
+      },
+      customToolbar: [
+        ["bold", "italic", "underline"],
+        [{ align: "" }, { align: "center" }, { align: "right" }],
+        [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+        [{ background: [] }, { color: [] }],
+        ["image", "link"],
+        ["clean"]
+      ]
     };
   },
   created() {
@@ -386,6 +394,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~vue2-editor/dist/vue2-editor.css";
 .productImg {
   width: 100%;
   min-width: 100px;

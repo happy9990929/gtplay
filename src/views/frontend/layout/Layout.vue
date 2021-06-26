@@ -17,10 +17,6 @@ export default {
 };
 </script>
 <style>
-ul {
-  list-style: none;
-  padding: 0;
-}
 @media screen and (min-width: 576px) {
   html,
   body {
@@ -29,6 +25,10 @@ ul {
 }
 </style>
 <style lang="scss" scoped>
+::v-deep ul {
+  list-style: none;
+  padding: 0;
+}
 @mixin outlineBtnHoverAngle {
   width: 80px;
   background-color: #feecba;
