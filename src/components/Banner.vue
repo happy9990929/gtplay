@@ -3,7 +3,7 @@
     class="inpageBanner align-items-center align-items-lg-end"
     :style="`background-image: url('/images/${bannerImg}.jpg');`"
   >
-    <div class="text-center mt-5 mb-lg-5">
+    <div class="text-center mt-5 mb-lg-5 animate__animated animate__bounceIn">
       <div class="titleName">{{ cnTitle }}</div>
       <div class="subName">{{ enTitle }}</div>
     </div>

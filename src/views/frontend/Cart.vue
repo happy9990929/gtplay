@@ -2,7 +2,7 @@
   <main>
     <banner />
     <cart-step />
-    <div class="container">
+    <div class="container animate__animated animate__fadeIn">
       <div class="table-responsive mt-5">
         <table class="table text-center">
           <thead class="thead mb-1">
@@ -50,7 +50,7 @@
           <span class="angleLineRight mr-2"></span>
           繼續選購
         </router-link>
-        <router-link to="/info" class="outlineBtn">
+        <router-link to="/info" class="outlineBtn next">
           下一步
           <span class="angleLineLeft ml-2"></span>
         </router-link>

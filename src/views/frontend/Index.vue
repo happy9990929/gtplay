@@ -4,21 +4,28 @@
       <div class="bannerContain mx-auto">
         <div class="d-flex align-items-center justify-content-around">
           <div>
-            <div class="titleName mb-3 text-gold">頂級工藝．先進技術</div>
-            <div class="bannerText mb-3">
-              來自台灣的專業技師製作，難以抗拒的共鳴音色
-              <br />多種入門至進階款式，找到練琴的最佳手感
+            <div class="titleName mb-3 animate__animated animate__fadeInUp">
+              頂級工藝．先進技術
             </div>
-            <router-link to="/products" class="outlineBtn">
-              <span>挑選你的吉他</span>
-              <span class="angleLineLeft ml-2"></span>
-            </router-link>
+            <div class="animate__animated animate__fadeInUp animate__delay-1s">
+              <div class="bannerText mb-3">
+                來自台灣的專業技師製作，難以抗拒的共鳴音色
+                <br />多種入門至進階款式，找到練琴的最佳手感
+              </div>
+              <router-link
+                to="/products"
+                class="outlineBtn animate__animated animate__swing animate__delay-2s"
+              >
+                <span>挑選你的吉他</span>
+                <span class="angleLineLeft ml-2"></span>
+              </router-link>
+            </div>
           </div>
           <div>
             <div
               class="guitarBox mx-auto position-relative"
               :style="
-                `background-position-y: ${guitarAni.position}px; transition: background-position-y ${guitarAni.second}s ease-in-out`
+                `background-position-y: ${guitarAni.position}px;`
               "
             >
               <div class="pick pickLeft d-none d-lg-block" @click="prevGt">
@@ -171,23 +178,23 @@
     <section class="d-block d-lg-none">
       <div class="my-5">
         <div>
-          <img src="@/assets/images/frontend/index/intro_ele.jpg" class="img-fluid" />
+          <img src="@/assets/images/frontend/index/intro_ele.jpg" class="imgBg" />
         </div>
-        <router-link to="/products" class="mIntro h2 d-block text-center"
-          >Electric Guitar</router-link
-        >
+        <router-link to="/products" class="mIntro h2 d-block text-center">
+          Electric Guitar
+        </router-link>
       </div>
       <div class="my-5">
         <div>
-          <img src="@/assets/images/frontend/index/intro_classical.jpg" class="img-fluid" />
+          <img src="@/assets/images/frontend/index/intro_classical.jpg" class="imgBg" />
         </div>
-        <router-link to="/products" class="mIntro h2 d-block text-center"
-          >Classical Guitar</router-link
-        >
+        <router-link to="/products" class="mIntro h2 d-block text-center">
+          Classical Guitar
+        </router-link>
       </div>
       <div class="my-5">
         <div>
-          <img src="@/assets/images/frontend/index/intro_ukulele.jpg" class="img-fluid" />
+          <img src="@/assets/images/frontend/index/intro_ukulele.jpg" class="imgBg" />
         </div>
         <router-link to="/products" class="mIntro h2 d-block text-center">Ukulele</router-link>
       </div>
@@ -230,6 +237,7 @@ export default index;
   background-image: url("~@/assets/images/frontend/index/guitar.png");
   background-repeat: no-repeat;
   background-size: cover;
+  transition: background-position-y .4s ease-in-out;
   height: 65vw;
   @media screen and (min-width: 992px) {
     width: 300px;
@@ -281,9 +289,13 @@ export default index;
 }
 
 .titleName {
-  font-size: 2rem;
+  font-size: 3vw;
   color: #feecba;
+  @media screen and (min-width: 992px) {
+    font-size: 2rem;
+  }
 }
+
 /*BANNER END*/
 /*INTRO*/
 .introBox {
@@ -393,6 +405,13 @@ export default index;
   transform: translateY(-30px);
 }
 /*INTRO END*/
+
+.imgBg {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;

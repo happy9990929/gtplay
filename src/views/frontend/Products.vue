@@ -3,7 +3,7 @@
     <banner />
     <div>
       <div class="container my-5">
-        <ul class="d-flex justify-content-center flex-wrap">
+        <ul class="d-flex justify-content-center flex-wrap animate__animated animate__fadeInUp">
           <li
             :class="['menuItem', { active: currentCategory === '' }]"
             @click="currentCategory = ''"
@@ -19,7 +19,7 @@
             {{ item }}
           </li>
         </ul>
-        <div class="row">
+        <div class="row animate__animated animate__fadeInUp animate__delay-.5s">
           <div class="col-6 col-lg-4 my-4 px-4" v-for="item in filterCategories" :key="item.id">
             <router-link :to="`/product/${item.id}`" class="productBg text-center pb-3 d-block">
               <div class="productImg" :style="`background-image: url('${item.imageUrl}');`"></div>

@@ -100,6 +100,33 @@ ul {
     transform: rotate(45deg);
   }
 }
+::v-deep .next {
+  &:not(:disabled) {
+    background-color: #feecba;
+    color: #000;
+    .angleLineLeft {
+      background-color: #000;
+      &::after {
+        background-color: #000;
+      }
+      &::before {
+        background-color: #000;
+      }
+      &:hover {
+        color: #000;
+      }
+    }
+    &:hover {
+      color: #000;
+      .angleLineLeft {
+        background-color: #000;
+      }
+    }
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
 ::v-deep .align-middle {
   vertical-align: middle;
 }

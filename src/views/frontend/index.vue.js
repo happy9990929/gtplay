@@ -2,8 +2,7 @@ export default {
   data() {
     return {
       guitarAni: {
-        position: -40,
-        second: 0.4
+        position: -40
       },
       windowW: window.innerWidth,
       ele: {
@@ -34,8 +33,8 @@ export default {
     };
   },
   mounted() {
-    this.getWindowH();
-    this.scrollDom();
+    window.addEventListener("resize", this.getWindowH);
+    window.addEventListener("mousewheel", this.scrollDom);
   },
   computed: {
     eleFade() {
@@ -52,58 +51,41 @@ export default {
     // 吉他上一張
     prevGt() {
       if (this.windowW >= 1200) {
-        this.guitarAni.second = 0.4;
         this.guitarAni.position += 989;
         if (this.guitarAni.position >= -40) {
-          setTimeout(() => {
-            this.guitarAni.second = 0;
-            this.guitarAni.position = -3007;
-          }, 500);
+          this.guitarAni.position = -40;
         }
       }
       if (this.windowW >= 992 && this.windowW < 1200) {
-        this.guitarAni.second = 0.3;
         this.guitarAni.position += 740;
         if (this.guitarAni.position >= -40) {
-          setTimeout(() => {
-            this.guitarAni.second = 0;
-            this.guitarAni.position = -2264;
-          }, 300);
+          this.guitarAni.position = -40;
         }
       }
     },
     // 吉他下一張
     nextGt() {
       if (this.windowW >= 1200) {
-        this.guitarAni.second = 0.4;
         this.guitarAni.position -= 989;
-        if (this.guitarAni.position <= -3007) {
-          setTimeout(() => {
-            this.guitarAni.second = 0;
-            this.guitarAni.position = -40;
-          }, 400);
+        if (this.guitarAni.position <= -2018) {
+          this.guitarAni.position = -2018;
         }
       }
       if (this.windowW >= 992 && this.windowW < 1200) {
-        this.guitarAni.second = 0.3;
         this.guitarAni.position -= 740;
-        if (this.guitarAni.position <= -2264) {
-          setTimeout(() => {
-            this.guitarAni.second = 0;
-            this.guitarAni.position = -40;
-          }, 300);
+        if (this.guitarAni.position <= -1520) {
+          this.guitarAni.position = -1520;
         }
       }
     },
     getWindowH() {
-      window.addEventListener("resize", () => {
-        this.windowW = window.innerWidth;
-        window.location.reload();
-      });
+      this.windowW = window.innerWidth;
+      window.location.reload();
     },
     scrollDom() {
       let beforeScrollY =
         document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+      console.log(beforeScrollY);
       const scrollFun = () => {
         let scrollTop =
           document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
@@ -114,7 +96,9 @@ export default {
         const ukuleleHeight = this.$refs.intro_ukulele.offsetHeight; // 古典吉他 高度
         const ukuleleOffsetTop = this.$refs.intro_ukulele.offsetTop; // 古典吉他 offsetTop
         let isScrollDown = scrollTop >= beforeScrollY ? true : false; // 判斷 scroll 上下
-
+        // console.log(scrollTop);
+        // console.log(eleHeight + eleOffsetTop);
+        // console.log(eleOffsetTop);
         // intro 文字顯示
         if (scrollTop < eleHeight + eleOffsetTop && scrollTop > eleOffsetTop) {
           this.ele.introText = true;
@@ -149,7 +133,7 @@ export default {
           isScrollDown === true
         ) {
           // 往下滾縮小圖片
-          this.ele.scale -= 0.005;
+          this.ele.scale -= 0.01;
 
           // 縮放最小到 0.7
           if (this.ele.scale <= 0.7) {
@@ -177,7 +161,7 @@ export default {
           isScrollDown === true
         ) {
           // 往下滾縮小圖片
-          this.classical.scale -= 0.005;
+          this.classical.scale -= 0.01;
           if (this.classical.scale <= 0.7) {
             this.classical.scale = 0.7;
             this.classical.showOtherImg = true;
@@ -203,7 +187,7 @@ export default {
           isScrollDown === true
         ) {
           // 往下滾縮小圖片
-          this.ukulele.scale -= 0.005;
+          this.ukulele.scale -= 0.01;
           if (this.ukulele.scale <= 0.7) {
             this.ukulele.scale = 0.7;
             this.ukulele.showOtherImg = true;
@@ -222,7 +206,12 @@ export default {
           beforeScrollY = scrollTop;
         }
       };
-      window.addEventListener("mousewheel", scrollFun);
+      scrollFun();
+      // window.addEventListener("mousewheel", scrollFun);
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.getWindowH);
+    window.removeEventListener("mousewheel", this.scrollDom);
   }
 };

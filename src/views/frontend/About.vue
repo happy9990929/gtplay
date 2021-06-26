@@ -86,6 +86,7 @@ export default {
 .scrollBox {
   background-image: url("~@/assets/images/frontend/about/about.jpg");
   background-position-x: center;
+  background-size: cover;
   width: 100%;
 }
 .mask {

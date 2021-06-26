@@ -2,7 +2,7 @@
   <main>
     <banner />
     <cart-step />
-    <div class="container mt-5">
+    <div class="container mt-5 animate__animated animate__fadeIn">
       <validation-observer v-slot="{ invalid }">
         <form>
           <div class="row">
@@ -12,9 +12,8 @@
                   <label for="userName">姓名</label>
                   <input
                     type="text"
-                    class="form-control"
+                    :class="['form-control', classes]"
                     id="userName"
-                    :class="classes"
                     name="姓名"
                     v-model="form.name"
                   />
@@ -27,8 +26,7 @@
                   <input
                     id="tel"
                     type="tel"
-                    class="form-control"
-                    :class="classes"
+                    :class="['form-control', classes]"
                     name="電話"
                     v-model="form.tel"
                   />
@@ -40,9 +38,8 @@
                   <label for="email">E-mail</label>
                   <input
                     type="email"
-                    class="form-control"
                     id="email"
-                    :class="classes"
+                    :class="['form-control', classes]"
                     name="email"
                     v-model="form.email"
                   />
@@ -54,9 +51,8 @@
                   <label for="address">地址</label>
                   <input
                     type="text"
-                    class="form-control"
                     id="address"
-                    :class="classes"
+                    :class="['form-control', classes]"
                     name="地址"
                     v-model="form.address"
                   />
@@ -70,15 +66,14 @@
                   <label for="payment">付款方式</label>
                   <select
                     id="payment"
-                    class="form-control"
-                    :class="classes"
+                    :class="['form-control', classes]"
                     name="付款方式"
                     v-model="form.payment"
                   >
                     <option value="" disabled>
                       請選擇付款方式
                     </option>
-                    <option v-for="item in pay" :key="item" :value="item">{{ item }}</option>
+                    <option v-for="item in pay" :key="item" :value="item" class="text-dark">{{ item }}</option>
                   </select>
                   <span class="invalid-feedback">{{ errors[0] }}</span>
                 </validation-provider>
@@ -100,7 +95,7 @@
               <span class="angleLineRight mr-2"></span>
               上一步
             </router-link>
-            <button type="button" @click="submitForm" class="outlineBtn" :disabled="invalid">
+            <button type="button" @click="submitForm" class="outlineBtn next" :disabled="invalid">
               下一步
               <span class="angleLineLeft ml-2"></span>
             </button>

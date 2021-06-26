@@ -78,7 +78,7 @@
           <span class="angleLineRight mr-2"></span>
           上一步
         </router-link>
-        <button type="button" class="outlineBtn" @click="checkOut">
+        <button type="button" class="outlineBtn next" @click="checkOut">
           確認付款
           <span class="angleLineLeft ml-2"></span>
         </button>

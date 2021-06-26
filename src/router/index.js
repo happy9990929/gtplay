@@ -86,6 +86,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  linkExactActiveClass: "active", //設定 全域 的 <router-link> 若路由"完全相符"，會加入的 class 名稱
   scrollBehavior() {
     return { x: 0, y: 0 }; //路由切換時，期望滾動到的滾輪位置;
   }

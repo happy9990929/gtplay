@@ -17,9 +17,10 @@
     <div class="collapse navbar-collapse" id="navbar">
       <div class="navbar-nav text-center">
         <div class="d-lg-flex">
-          <router-link class="nav-link text-primary mx-md-3" to="/about">關於我們</router-link>
-          <router-link class="nav-link text-primary mx-md-3" to="/products">產品列表</router-link>
-          <router-link class="nav-link text-primary mx-md-3 d-lg-none" to="/cart">
+          <router-link class="nav-link" to="/">首頁</router-link>
+          <router-link class="nav-link" to="/about">關於我們</router-link>
+          <router-link class="nav-link" to="/products">產品介紹</router-link>
+          <router-link class="nav-link d-lg-none" to="/cart">
             購物車<span class="cartNum text-white ml-1 ml-lg-0">{{ getCartAmount }}</span>
           </router-link>
         </div>
@@ -94,11 +95,29 @@ export default {
 }
 .navbar-nav {
   .nav-link {
+    color: #fff;
+    background-color: rgba(0,0,0,.9);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    @media screen and (min-width: 992px) {
+        background-color: transparent;
+        margin-left: .5rem;
+        margin-right: .5rem;
+    }
     &:hover {
-      background-color: rgba(0, 0, 0, 0.5);
-      color: #feecba;
+      background-color: #feecba;
+      color: #000;
       @media screen and (min-width: 992px) {
         background-color: transparent;
+        color: #feecba;
+      }
+    }
+    &.active {
+      background-color: #feecba;
+      color: #000;
+      @media screen and (min-width: 992px) {
+        background-color: transparent;
+        color: #feecba;
       }
     }
   }
@@ -128,6 +147,55 @@ export default {
   right: 2%;
   top: 2%;
   cursor: pointer;
+  &:hover {
+    background-color: #000;
+    animation-name: bounceIn;
+    animation-duration: .8s;
+  }
+}
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
 }
 .cartNum {
   width: 25px;
