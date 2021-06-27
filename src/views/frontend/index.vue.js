@@ -35,6 +35,7 @@ export default {
   mounted() {
     window.addEventListener("resize", this.getWindowH);
     window.addEventListener("mousewheel", this.scrollDom);
+    // this.$refs.prev.style.filter = "brightness(0.5)";
   },
   computed: {
     eleFade() {
@@ -45,6 +46,25 @@ export default {
     },
     ukuleleFade() {
       return this.ukulele.introText ? "textFadeIn" : "textFadeOut";
+    },
+    prevStyle() {
+      return this.guitarAni.position >= -40 ? "filter: brightness(0.5)" : "";
+    },
+    nextStyle() {
+      if (this.windowW >= 1200) {
+        if (this.guitarAni.position <= -2018) {
+          return "filter: brightness(0.5)";
+        } else {
+          return "";
+        }
+      }
+      if (this.windowW >= 992 && this.windowW < 1200) {
+        if (this.guitarAni.position <= -1520) {
+          return "filter: brightness(0.5)";
+        } else {
+          return "";
+        }
+      }
     }
   },
   methods: {

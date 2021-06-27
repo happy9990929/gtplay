@@ -24,14 +24,12 @@
           <div>
             <div
               class="guitarBox mx-auto position-relative"
-              :style="
-                `background-position-y: ${guitarAni.position}px;`
-              "
+              :style="`background-position-y: ${guitarAni.position}px;`"
             >
-              <div class="pick pickLeft d-none d-lg-block" @click="prevGt">
+              <div class="pick pickLeft d-none d-lg-block" @click="prevGt" :style="prevStyle">
                 <img src="@/assets/images/frontend/index/pick.png" class="img-fluid" />
               </div>
-              <div class="pick pickRight d-none d-lg-block" @click="nextGt">
+              <div class="pick pickRight d-none d-lg-block" @click="nextGt" :style="nextStyle">
                 <img src="@/assets/images/frontend/index/pick.png" class="img-fluid" />
               </div>
             </div>
@@ -237,7 +235,7 @@ export default index;
   background-image: url("~@/assets/images/frontend/index/guitar.png");
   background-repeat: no-repeat;
   background-size: cover;
-  transition: background-position-y .4s ease-in-out;
+  transition: background-position-y 0.4s ease-in-out;
   height: 65vw;
   @media screen and (min-width: 992px) {
     width: 300px;
