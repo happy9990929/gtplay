@@ -6,7 +6,7 @@ import VueAxios from "vue-axios";
 
 // Loading 套件
 import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.min.css";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 // SuperSlide
 import VueSuperSlide from "vue-superslide";
@@ -37,7 +37,16 @@ localize("zh_TW", TW);
 
 window.$ = jquery;
 Vue.use(VueAxios, axios);
-Vue.use(Loading);
+Vue.use(Loading, {
+  canCancel: false,
+  color: "#feecba",
+  loader: "bars", // spinner/dots/bars
+  width: 100,
+  height: 100,
+  backgroundColor: "#000",
+  isFullPage: true,
+  opacity: 0.5
+});
 Vue.use(VueSuperSlide);
 Vue.config.productionTip = false;
 new Vue({

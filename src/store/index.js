@@ -1,9 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.min.css";
-Vue.use(Loading);
+import "vue-loading-overlay/dist/vue-loading.css";
+Vue.use(Loading, {
+  canCancel: false,
+  color: "#feecba",
+  loader: "bars", // spinner/dots/bars
+  width: 100,
+  height: 100,
+  backgroundColor: "#000",
+  isFullPage: true,
+  opacity: 0.5
+});
 Vue.use(Vuex);
 import {
   apiGetProductsRequest,
