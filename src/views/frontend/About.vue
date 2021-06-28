@@ -27,24 +27,22 @@ export default {
         opacity: 0,
         translate: 100
       },
-      scrollBoxStyle: "position: fixed"
+      scrollBoxStyle: "position: fixed",
+      beforeScroll: document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop,
+      windowH: window.innerHeight
     };
   },
   mounted() {
-    this.setMask();
+    window.addEventListener("scroll", this.setMask)
   },
   methods: {
     setMask() {
-      // before scrollTop
-      let beforeScroll =
-        document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-      const windowH = window.innerHeight; // 螢幕高度
-      window.addEventListener("scroll", () => {
+      const aboutMask = () => {
         // current scrollTop
         let scrollTop =
           document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
 
-        let isScrollDown = scrollTop >= beforeScroll ? true : false; // 判斷 scroll 上下
+        let isScrollDown = scrollTop >= this.beforeScroll ? true : false; // 判斷 scroll 上下
 
         // 往下滾
         if (isScrollDown) {
@@ -58,24 +56,28 @@ export default {
           if (this.mask.opacity >= 0.8) this.mask.opacity = 0.8;
 
           // 大於螢幕高度，移動到100%
-          if (scrollTop > windowH) this.scrollBoxStyle = "transform: translateY(100%);";
+          if (scrollTop > this.windowH) this.scrollBoxStyle = "transform: translateY(100%);";
 
-          beforeScroll = scrollTop;
+          this.beforeScroll = scrollTop;
         } else {
           // 往上滾
           // 減少透明度
           this.mask.opacity -= 0.01;
 
           // 大於螢幕高度，固定畫面
-          if (scrollTop < windowH) this.scrollBoxStyle = "position: fixed";
+          if (scrollTop < this.windowH) this.scrollBoxStyle = "position: fixed";
 
           // 透明度最低到 0
           if (this.mask.opacity <= 0) this.mask.opacity = 0;
 
-          beforeScroll = scrollTop;
+          this.beforeScroll = scrollTop;
         }
-      });
+      };
+      aboutMask();
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.setMask)
   }
 };
 </script>

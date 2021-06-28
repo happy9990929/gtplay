@@ -29,13 +29,13 @@ export default {
         translate1: 0,
         translate2: 0
       },
-      textPosition: -100
+      textPosition: -100,
+      beforeScrollY: document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
     };
   },
   mounted() {
     window.addEventListener("resize", this.getWindowH);
     window.addEventListener("mousewheel", this.scrollDom);
-    // this.$refs.prev.style.filter = "brightness(0.5)";
   },
   computed: {
     eleFade() {
@@ -103,9 +103,6 @@ export default {
       window.location.reload();
     },
     scrollDom() {
-      let beforeScrollY =
-        document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-      console.log(beforeScrollY);
       const scrollFun = () => {
         let scrollTop =
           document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
@@ -115,10 +112,7 @@ export default {
         const classicalOffsetTop = this.$refs.intro_classical.offsetTop; // 古典吉他 offsetTop
         const ukuleleHeight = this.$refs.intro_ukulele.offsetHeight; // 古典吉他 高度
         const ukuleleOffsetTop = this.$refs.intro_ukulele.offsetTop; // 古典吉他 offsetTop
-        let isScrollDown = scrollTop >= beforeScrollY ? true : false; // 判斷 scroll 上下
-        // console.log(scrollTop);
-        // console.log(eleHeight + eleOffsetTop);
-        // console.log(eleOffsetTop);
+        let isScrollDown = scrollTop >= this.beforeScrollY ? true : false; // 判斷 scroll 上下
         // intro 文字顯示
         if (scrollTop < eleHeight + eleOffsetTop && scrollTop > eleOffsetTop) {
           this.ele.introText = true;
@@ -162,7 +156,7 @@ export default {
             this.ele.translate1 += 10;
             this.ele.translate2 += 5;
           }
-          beforeScrollY = scrollTop;
+          this.beforeScrollY = scrollTop;
         }
         if (
           scrollTop < eleHeight + eleOffsetTop &&
@@ -171,7 +165,7 @@ export default {
         ) {
           this.ele.translate1 -= 15;
           this.ele.translate2 -= 10;
-          beforeScrollY = scrollTop;
+          this.beforeScrollY = scrollTop;
         }
 
         // Classical guitar
@@ -188,7 +182,7 @@ export default {
             this.classical.translate1 += 10;
             this.classical.translate2 += 5;
           }
-          beforeScrollY = scrollTop;
+          this.beforeScrollY = scrollTop;
         }
         if (
           scrollTop < classicalHeight + classicalOffsetTop &&
@@ -197,7 +191,7 @@ export default {
         ) {
           this.classical.translate1 -= 15;
           this.classical.translate2 -= 10;
-          beforeScrollY = scrollTop;
+          this.beforeScrollY = scrollTop;
         }
 
         // Ukulele guitar
@@ -214,7 +208,7 @@ export default {
             this.ukulele.translate1 += 10;
             this.ukulele.translate2 += 5;
           }
-          beforeScrollY = scrollTop;
+          this.beforeScrollY = scrollTop;
         }
         if (
           scrollTop < ukuleleHeight + ukuleleOffsetTop &&
@@ -223,11 +217,10 @@ export default {
         ) {
           this.ukulele.translate1 -= 15;
           this.ukulele.translate2 -= 10;
-          beforeScrollY = scrollTop;
+          this.beforeScrollY = scrollTop;
         }
       };
       scrollFun();
-      // window.addEventListener("mousewheel", scrollFun);
     }
   },
   beforeDestroy() {
