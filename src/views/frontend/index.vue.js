@@ -120,27 +120,53 @@ export default {
         let scrollTop =
           document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
         let isScrollDown = scrollTop >= this.beforeScrollY ? true : false; // 判斷 scroll 上下
+
+        // 高度
         const bannerH = this.$refs.banner.offsetHeight;
         const windowH = window.innerHeight;
+        const eleTop = bannerH;
+        const classcilTop = bannerH + windowH * 2;
+        const ukuleleTop = bannerH + windowH * 6;
+
         // 縮放、imgs動畫
         let eleScale = false;
         let classicalScale = false;
         let ukuleleScale = false;
 
-        // 高度
-        const eleTop = bannerH;
-        const classcilTop = bannerH + windowH * 2;
-        const ukuleleTop = bannerH + windowH * 6;
+        // title 動畫
+        if (scrollTop < eleTop) {
+          this.titlePosition = -100; // 隱藏title
+        }
 
-        // 超過banner
-        if (scrollTop > bannerH) {
+        if (scrollTop > eleTop && scrollTop < classcilTop) {
+          this.titlePosition = 0; // 顯示title
+          this.ele.title = true;
+          this.classical.title = false;
+        }
+
+        if (scrollTop > classcilTop && scrollTop < ukuleleTop) {
+          this.classical.title = true;
+          this.ele.title = false;
+          this.ukulele.title = false;
+        }
+
+        if (scrollTop > ukuleleTop) {
+          this.ukulele.title = true;
+          this.classical.title = false;
+        }
+
+        // 圖片動畫
+        // 電吉他
+        if (scrollTop < eleTop) {
+          this.eleStyle = ""; // init樣式
+          this.ele.imgs = false; // 隱藏其他圖片
+        }
+
+        if (scrollTop > eleTop) {
           this.eleStyle = "position: fixed; top: 0;";
         }
 
-        if (scrollTop > bannerH && scrollTop < bannerH + windowH * 2) {
-          this.titlePosition = 0;
-          this.ele.title = true;
-          this.classical.title = false;
+        if (scrollTop > eleTop && scrollTop < classcilTop) {
           eleScale = true;
         }
         if (eleScale) {
@@ -165,32 +191,34 @@ export default {
             this.beforeScrollY = scrollTop;
           }
         }
-        if (scrollTop < bannerH) {
-          this.eleStyle = "";
-          this.titlePosition = -100;
-        }
-        if (scrollTop > bannerH + windowH) {
+
+        if (scrollTop > eleTop + windowH) {
           this.eleStyle = `transform: translateY(${windowH}px);`;
-          this.ele.imgs = true; // 大於圖片時show小圖
-        }
-        if (scrollTop < bannerH) {
-          this.ele.imgs = false;
+          this.ele.imgs = true; // 顯示其他圖片
         }
 
         // 木吉他
-        if (scrollTop > bannerH + windowH * 2) {
+        if (scrollTop < eleTop + windowH) {
+          this.classical.banner = false;
+        }
+
+        if (scrollTop < classcilTop + windowH) {
+          this.classicalStyle = "";
+          this.classical.imgs = false;
+        }
+
+        if (scrollTop > classcilTop) {
           this.classical.banner = true;
         }
 
         if (this.$refs.intro_classical.offsetTop > 0) {
+          // DOM 出現時執行
           if (scrollTop >= this.$refs.intro_classical.offsetTop) {
             this.classicalStyle = "position: fixed; top: 0;";
           }
         }
 
-        if (scrollTop > bannerH + windowH * 3 && scrollTop < bannerH + windowH * 6) {
-          this.classical.title = true;
-          this.ele.title = false;
+        if (scrollTop > classcilTop + windowH && scrollTop < ukuleleTop) {
           classicalScale = true;
         }
 
@@ -217,39 +245,26 @@ export default {
           }
         }
 
-        if (scrollTop < bannerH + windowH) {
-          this.classical.banner = false;
-          this.classical.imgs = false;
-          this.classicalStyle = "";
-        }
-
-        if (scrollTop < bannerH + windowH * 3) {
-          this.classicalStyle = "";
-          this.classical.imgs = false;
-        }
-
-        if (scrollTop > bannerH + windowH * 4) {
+        if (scrollTop > classcilTop + windowH * 2) {
           this.classical.imgs = true;
         }
 
-        if (scrollTop > bannerH + windowH * 5) {
+        if (scrollTop > classcilTop + windowH * 3) {
           this.classicalStyle = `transform: translateY(${windowH * 2}px);`;
         }
 
         // ukulele
-        if (scrollTop > bannerH + windowH * 6) {
-          this.ukulele.banner = true;
-        }
-
-        if (scrollTop < bannerH + windowH * 5) {
+        if (scrollTop < classcilTop + windowH * 3) {
           this.ukulele.banner = false;
-          this.ukulele.imgs = false;
-          this.ukuleleStyle = "";
         }
 
-        if (scrollTop < bannerH + windowH * 6 && scrollTop > bannerH + windowH * 5) {
-          this.ukulele.title = false;
-          this.classical.title = true;
+        if (scrollTop < ukuleleTop + windowH) {
+          this.ukuleleStyle = "";
+          this.ukulele.imgs = false;
+        }
+
+        if (scrollTop > ukuleleTop) {
+          this.ukulele.banner = true;
         }
 
         if (this.$refs.intro_ukulele.offsetTop > 0) {
@@ -258,9 +273,7 @@ export default {
           }
         }
 
-        if (scrollTop > bannerH + windowH * 7) {
-          this.ukulele.title = true;
-          this.classical.title = false;
+        if (scrollTop > ukuleleTop + windowH) {
           ukuleleScale = true;
         }
 
@@ -287,16 +300,11 @@ export default {
           }
         }
 
-        if (scrollTop < bannerH + windowH * 7) {
-          this.ukuleleStyle = "";
-          this.ukulele.imgs = false;
-        }
-
-        if (scrollTop > bannerH + windowH * 8) {
+        if (scrollTop > ukuleleTop + windowH * 2) {
           this.ukulele.imgs = true;
         }
 
-        if (scrollTop > bannerH + windowH * 9) {
+        if (scrollTop > ukuleleTop + windowH * 3) {
           this.ukuleleStyle = `transform: translateY(${windowH * 2}px);`;
         }
       };
