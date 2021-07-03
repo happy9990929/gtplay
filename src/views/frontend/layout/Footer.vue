@@ -1,26 +1,15 @@
 <template>
-  <footer class="footer text-center pt-5 pb-1" v-show="showFooter">
+  <footer class="footer text-center pt-5 pb-1">
     <div class="mt-5 d-block d-lg-flex justify-content-center">
-      <div>
-        © 2021. All Rights Reserved.
+      <div class="px-3">
+        For learning use only, no commercial use
       </div>
       <div>
-        For learning use only, no commercial use
+        圖片來源: Unsplash、pngimg
       </div>
     </div>
   </footer>
 </template>
-
-<script>
-export default {
-  mounted() {},
-  computed: {
-    showFooter() {
-      return this.$route.path === "/" ? false : true;
-    }
-  }
-};
-</script>
 
 <style>
 .footer {

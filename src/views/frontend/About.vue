@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bannerBox position-relative">
+    <div class="bannerBox position-relative animate__animated animate__fadeIn">
       <div class="scrollBox" :style="`${scrollBoxStyle}`">
         <div
           class="mask d-flex justify-content-center align-items-center"
@@ -46,9 +46,9 @@ export default {
 
         // 往下滾
         if (isScrollDown) {
+          this.mask.translate = 0;
           // 大於30時出現遮罩，開始加透明度
-          if (scrollTop > 30) {
-            this.mask.translate = 0;
+          if (scrollTop > 100) {
             this.mask.opacity += 0.02;
           }
 

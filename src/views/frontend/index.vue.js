@@ -1,100 +1,113 @@
 export default {
   data() {
     return {
-      guitarAni: {
-        position: -40
-      },
-      windowW: window.innerWidth,
+      guitarPosition: -40, // 吉他選單
+      windowW: window.innerWidth, // 螢幕寬度
       ele: {
         scale: 1,
-        showOtherImg: false, // 其他圖片顯示
-        introText: false,
-        index: 0,
-        translate1: 0,
-        translate2: 0
+        title: false, // 文字
+        imgs: false, // 圖片顯示
+        imgLeft: 0, // 左圖
+        imgRight: 0 // 右圖
       },
       classical: {
+        banner: false,
         scale: 1,
-        showOtherImg: false, // 其他圖片顯示
-        introText: false,
-        index: 0,
-        translate1: 0,
-        translate2: 0
+        imgs: false,
+        title: false,
+        imgLeft: 0,
+        imgRight: 0
       },
       ukulele: {
+        banner: false,
         scale: 1,
-        showOtherImg: false, // 其他圖片顯示
-        introText: false,
-        index: 0,
-        translate1: 0,
-        translate2: 0
+        imgs: false,
+        title: false,
+        imgLeft: 0,
+        imgRight: 0
       },
-      textPosition: -100,
-      beforeScrollY: document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+      titlePosition: -100,
+      beforeScrollY:
+        document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop,
+      eleStyle: "",
+      ukuleleStyle: "",
+      classicalStyle: ""
     };
   },
   mounted() {
     window.addEventListener("resize", this.getWindowH);
-    window.addEventListener("mousewheel", this.scrollDom);
+    window.addEventListener("scroll", this.scrollDom);
   },
   computed: {
-    eleFade() {
-      return this.ele.introText ? "textFadeIn" : "textFadeOut";
-    },
-    classicalFade() {
-      return this.classical.introText ? "textFadeIn" : "textFadeOut";
-    },
-    ukuleleFade() {
-      return this.ukulele.introText ? "textFadeIn" : "textFadeOut";
-    },
+    // 吉他選單左右按鈕
     prevStyle() {
-      return this.guitarAni.position >= -40 ? "filter: brightness(0.5)" : "";
+      return this.guitarPosition >= -40 ? "filter: brightness(0.5)" : "";
     },
     nextStyle() {
       if (this.windowW >= 1200) {
-        if (this.guitarAni.position <= -2018) {
+        if (this.guitarPosition <= -2018) {
           return "filter: brightness(0.5)";
         } else {
           return "";
         }
       }
       if (this.windowW >= 992 && this.windowW < 1200) {
-        if (this.guitarAni.position <= -1520) {
+        if (this.guitarPosition <= -1520) {
           return "filter: brightness(0.5)";
         } else {
           return "";
         }
       }
+    },
+    // title 樣式
+    eleFade() {
+      return this.ele.title ? "textFadeIn" : "textFadeOut";
+    },
+    classicalFade() {
+      return this.classical.title ? "textFadeIn" : "textFadeOut";
+    },
+    ukuleleFade() {
+      return this.ukulele.title ? "textFadeIn" : "textFadeOut";
+    },
+    // title index
+    eleTextIndex() {
+      return this.ele.title ? 1 : 0;
+    },
+    classicalTextIndex() {
+      return this.classical.title ? 1 : 0;
+    },
+    ukuleleTextIndex() {
+      return this.ukulele.title ? 1 : 0;
     }
   },
   methods: {
     // 吉他上一張
     prevGt() {
       if (this.windowW >= 1200) {
-        this.guitarAni.position += 989;
-        if (this.guitarAni.position >= -40) {
-          this.guitarAni.position = -40;
+        this.guitarPosition += 989;
+        if (this.guitarPosition >= -40) {
+          this.guitarPosition = -40;
         }
       }
       if (this.windowW >= 992 && this.windowW < 1200) {
-        this.guitarAni.position += 740;
-        if (this.guitarAni.position >= -40) {
-          this.guitarAni.position = -40;
+        this.guitarPosition += 740;
+        if (this.guitarPosition >= -40) {
+          this.guitarPosition = -40;
         }
       }
     },
     // 吉他下一張
     nextGt() {
       if (this.windowW >= 1200) {
-        this.guitarAni.position -= 989;
-        if (this.guitarAni.position <= -2018) {
-          this.guitarAni.position = -2018;
+        this.guitarPosition -= 989;
+        if (this.guitarPosition <= -2018) {
+          this.guitarPosition = -2018;
         }
       }
       if (this.windowW >= 992 && this.windowW < 1200) {
-        this.guitarAni.position -= 740;
-        if (this.guitarAni.position <= -1520) {
-          this.guitarAni.position = -1520;
+        this.guitarPosition -= 740;
+        if (this.guitarPosition <= -1520) {
+          this.guitarPosition = -1520;
         }
       }
     },
@@ -106,118 +119,185 @@ export default {
       const scrollFun = () => {
         let scrollTop =
           document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        const eleHeight = this.$refs.intro_ele.offsetHeight; // 電吉他 高度
-        const eleOffsetTop = this.$refs.intro_ele.offsetTop; // 電吉他 offsetTop
-        const classicalHeight = this.$refs.intro_classical.offsetHeight; // 古典吉他 高度
-        const classicalOffsetTop = this.$refs.intro_classical.offsetTop; // 古典吉他 offsetTop
-        const ukuleleHeight = this.$refs.intro_ukulele.offsetHeight; // 古典吉他 高度
-        const ukuleleOffsetTop = this.$refs.intro_ukulele.offsetTop; // 古典吉他 offsetTop
         let isScrollDown = scrollTop >= this.beforeScrollY ? true : false; // 判斷 scroll 上下
-        // intro 文字顯示
-        if (scrollTop < eleHeight + eleOffsetTop && scrollTop > eleOffsetTop) {
-          this.ele.introText = true;
-          this.ele.index = 1;
-        } else {
-          this.ele.introText = false;
-          this.ele.index = 0;
+        const bannerH = this.$refs.banner.offsetHeight;
+        const windowH = window.innerHeight;
+        // 縮放、imgs動畫
+        let eleScale = false;
+        let classicalScale = false;
+        let ukuleleScale = false;
+
+        // 高度
+        const eleTop = bannerH;
+        const classcilTop = bannerH + windowH * 2;
+        const ukuleleTop = bannerH + windowH * 6;
+
+        // 超過banner
+        if (scrollTop > bannerH) {
+          this.eleStyle = "position: fixed; top: 0;";
         }
 
-        if (scrollTop < classicalHeight + classicalOffsetTop && scrollTop > classicalOffsetTop) {
-          this.classical.introText = true;
-          this.classical.index = 1;
-        } else {
-          this.classical.introText = false;
-          this.classical.index = 0;
+        if (scrollTop > bannerH && scrollTop < bannerH + windowH * 2) {
+          this.titlePosition = 0;
+          this.ele.title = true;
+          this.classical.title = false;
+          eleScale = true;
         }
+        if (eleScale) {
+          // 往下滾
+          if (isScrollDown) {
+            this.ele.scale -= 0.01;
+            this.ele.imgLeft += 1;
+            this.ele.imgRight += 1;
+            if (this.ele.scale <= 0.7) {
+              this.ele.scale = 0.7;
+            }
+            this.beforeScrollY = scrollTop;
+          } else {
+            // 往上滾
+            this.ele.scale += 0.01;
+            this.ele.imgLeft -= 1;
+            this.ele.imgRight -= 1;
 
-        if (scrollTop < ukuleleHeight + ukuleleOffsetTop && scrollTop > ukuleleOffsetTop) {
-          this.ukulele.introText = true;
-          this.ukulele.index = 1;
-        } else {
-          this.ukulele.introText = false;
-          this.ukulele.index = 0;
-        }
-
-        this.textPosition = scrollTop > eleOffsetTop ? 0 : -100;
-
-        // Electric guitar
-        if (
-          scrollTop < eleHeight + eleOffsetTop &&
-          scrollTop > eleOffsetTop &&
-          isScrollDown === true
-        ) {
-          // 往下滾縮小圖片
-          this.ele.scale -= 0.01;
-
-          // 縮放最小到 0.7
-          if (this.ele.scale <= 0.7) {
-            this.ele.scale = 0.7;
-            this.ele.showOtherImg = true;
-            this.ele.translate1 += 10;
-            this.ele.translate2 += 5;
+            if (this.ele.scale >= 1) {
+              this.ele.scale = 1;
+            }
+            this.beforeScrollY = scrollTop;
           }
-          this.beforeScrollY = scrollTop;
         }
-        if (
-          scrollTop < eleHeight + eleOffsetTop &&
-          scrollTop > eleOffsetTop &&
-          isScrollDown === false
-        ) {
-          this.ele.translate1 -= 15;
-          this.ele.translate2 -= 10;
-          this.beforeScrollY = scrollTop;
+        if (scrollTop < bannerH) {
+          this.eleStyle = "";
+          this.titlePosition = -100;
         }
-
-        // Classical guitar
-        if (
-          scrollTop < classicalHeight + classicalOffsetTop &&
-          scrollTop > classicalOffsetTop &&
-          isScrollDown === true
-        ) {
-          // 往下滾縮小圖片
-          this.classical.scale -= 0.01;
-          if (this.classical.scale <= 0.7) {
-            this.classical.scale = 0.7;
-            this.classical.showOtherImg = true;
-            this.classical.translate1 += 10;
-            this.classical.translate2 += 5;
-          }
-          this.beforeScrollY = scrollTop;
+        if (scrollTop > bannerH + windowH) {
+          this.eleStyle = `transform: translateY(${windowH}px);`;
+          this.ele.imgs = true; // 大於圖片時show小圖
         }
-        if (
-          scrollTop < classicalHeight + classicalOffsetTop &&
-          scrollTop > classicalOffsetTop &&
-          isScrollDown === false
-        ) {
-          this.classical.translate1 -= 15;
-          this.classical.translate2 -= 10;
-          this.beforeScrollY = scrollTop;
+        if (scrollTop < bannerH) {
+          this.ele.imgs = false;
         }
 
-        // Ukulele guitar
-        if (
-          scrollTop < ukuleleHeight + ukuleleOffsetTop &&
-          scrollTop > ukuleleOffsetTop &&
-          isScrollDown === true
-        ) {
-          // 往下滾縮小圖片
-          this.ukulele.scale -= 0.01;
-          if (this.ukulele.scale <= 0.7) {
-            this.ukulele.scale = 0.7;
-            this.ukulele.showOtherImg = true;
-            this.ukulele.translate1 += 10;
-            this.ukulele.translate2 += 5;
-          }
-          this.beforeScrollY = scrollTop;
+        // 木吉他
+        if (scrollTop > bannerH + windowH * 2) {
+          this.classical.banner = true;
         }
-        if (
-          scrollTop < ukuleleHeight + ukuleleOffsetTop &&
-          scrollTop > ukuleleOffsetTop &&
-          isScrollDown === false
-        ) {
-          this.ukulele.translate1 -= 15;
-          this.ukulele.translate2 -= 10;
-          this.beforeScrollY = scrollTop;
+
+        if (this.$refs.intro_classical.offsetTop > 0) {
+          if (scrollTop >= this.$refs.intro_classical.offsetTop) {
+            this.classicalStyle = "position: fixed; top: 0;";
+          }
+        }
+
+        if (scrollTop > bannerH + windowH * 3 && scrollTop < bannerH + windowH * 6) {
+          this.classical.title = true;
+          this.ele.title = false;
+          classicalScale = true;
+        }
+
+        if (classicalScale) {
+          // 往下滾
+          if (isScrollDown) {
+            this.classical.scale -= 0.01;
+            this.classical.imgLeft += 1;
+            this.classical.imgRight += 1;
+            if (this.classical.scale <= 0.7) {
+              this.classical.scale = 0.7;
+            }
+            this.beforeScrollY = scrollTop;
+          } else {
+            // 往上滾
+            this.classical.scale += 0.01;
+            this.classical.imgLeft -= 1;
+            this.classical.imgRight -= 1;
+
+            if (this.classical.scale >= 1) {
+              this.classical.scale = 1;
+            }
+            this.beforeScrollY = scrollTop;
+          }
+        }
+
+        if (scrollTop < bannerH + windowH) {
+          this.classical.banner = false;
+          this.classical.imgs = false;
+          this.classicalStyle = "";
+        }
+
+        if (scrollTop < bannerH + windowH * 3) {
+          this.classicalStyle = "";
+          this.classical.imgs = false;
+        }
+
+        if (scrollTop > bannerH + windowH * 4) {
+          this.classical.imgs = true;
+        }
+
+        if (scrollTop > bannerH + windowH * 5) {
+          this.classicalStyle = `transform: translateY(${windowH * 2}px);`;
+        }
+
+        // ukulele
+        if (scrollTop > bannerH + windowH * 6) {
+          this.ukulele.banner = true;
+        }
+
+        if (scrollTop < bannerH + windowH * 5) {
+          this.ukulele.banner = false;
+          this.ukulele.imgs = false;
+          this.ukuleleStyle = "";
+        }
+
+        if (scrollTop < bannerH + windowH * 6 && scrollTop > bannerH + windowH * 5) {
+          this.ukulele.title = false;
+          this.classical.title = true;
+        }
+
+        if (this.$refs.intro_ukulele.offsetTop > 0) {
+          if (scrollTop >= this.$refs.intro_ukulele.offsetTop) {
+            this.ukuleleStyle = "position: fixed; top: 0;";
+          }
+        }
+
+        if (scrollTop > bannerH + windowH * 7) {
+          this.ukulele.title = true;
+          this.classical.title = false;
+          ukuleleScale = true;
+        }
+
+        if (ukuleleScale) {
+          // 往下滾
+          if (isScrollDown) {
+            this.ukulele.scale -= 0.01;
+            this.ukulele.imgLeft += 1;
+            this.ukulele.imgRight += 1;
+            if (this.ukulele.scale <= 0.7) {
+              this.ukulele.scale = 0.7;
+            }
+            this.beforeScrollY = scrollTop;
+          } else {
+            // 往上滾
+            this.ukulele.scale += 0.01;
+            this.ukulele.imgLeft -= 1;
+            this.ukulele.imgRight -= 1;
+
+            if (this.ukulele.scale >= 1) {
+              this.ukulele.scale = 1;
+            }
+            this.beforeScrollY = scrollTop;
+          }
+        }
+
+        if (scrollTop < bannerH + windowH * 7) {
+          this.ukuleleStyle = "";
+          this.ukulele.imgs = false;
+        }
+
+        if (scrollTop > bannerH + windowH * 8) {
+          this.ukulele.imgs = true;
+        }
+
+        if (scrollTop > bannerH + windowH * 9) {
+          this.ukuleleStyle = `transform: translateY(${windowH * 2}px);`;
         }
       };
       scrollFun();
@@ -225,6 +305,6 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.getWindowH);
-    window.removeEventListener("mousewheel", this.scrollDom);
+    window.removeEventListener("scroll", this.scrollDom);
   }
 };

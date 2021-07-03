@@ -1,6 +1,6 @@
 <template>
-  <main ref="mainH">
-    <section class="banner text-white">
+  <main>
+    <section class="banner text-white" ref="banner">
       <div class="bannerContain mx-auto">
         <div class="d-flex align-items-center justify-content-around">
           <div>
@@ -24,7 +24,7 @@
           <div>
             <div
               class="guitarBox mx-auto position-relative"
-              :style="`background-position-y: ${guitarAni.position}px;`"
+              :style="`background-position-y: ${guitarPosition}px;`"
             >
               <div class="pick pickLeft d-none d-lg-block" @click="prevGt" :style="prevStyle">
                 <img src="@/assets/images/frontend/index/pick.png" class="img-fluid" />
@@ -40,74 +40,83 @@
         </div>
       </div>
     </section>
-    <section class="mt-5 d-none d-lg-block" ref="intro">
-      <div class="position-relative" ref="intro_ele">
-        <div :style="`transform: scale(${ele.scale})`">
+
+    <section class="mt-5 d-none d-lg-block introProducts" ref="intro">
+      <div class="introProduct intro_ele" ref="intro_ele" :style="eleStyle">
+        <div :style="`transform: scale(${ele.scale})`" style="transform-origin: top;">
           <img src="@/assets/images/frontend/index/intro_ele.jpg" class="img-fluid" />
         </div>
         <transition name="fade">
           <div
-            class="introBox intro_ele1"
-            v-show="ele.showOtherImg === true"
-            :style="`transform: translateY(${ele.translate1}px)`"
+            class="introBox intro1"
+            v-show="ele.imgs"
+            :style="`transform: translateY(${ele.imgLeft}px)`"
           >
             <img src="@/assets/images/frontend/index/intro_ele1.jpg" class="img-fluid" />
           </div>
         </transition>
         <transition name="fade">
           <div
-            class="introBox intro_ele2"
-            v-show="ele.showOtherImg === true"
-            :style="`transform: translateY(${ele.translate2}px)`"
+            class="introBox intro2"
+            v-show="ele.imgs"
+            :style="`transform: translateY(${ele.imgRight}px)`"
           >
             <img src="@/assets/images/frontend/index/intro_ele2.png" class="img-fluid" />
           </div>
         </transition>
       </div>
-      <div v-show="ele.showOtherImg === true" style="margin-top: 1000px;">
-        <div class="position-relative" ref="intro_classical">
-          <div :style="`transform: scale(${classical.scale})`">
+      <div
+        class="animate__animated animate__fadeIn"
+        v-show="classical.banner"
+        style="margin-top: 80vh"
+      >
+        <div class="introProduct" ref="intro_classical" :style="classicalStyle">
+          <div :style="`transform: scale(${classical.scale})`" style="transform-origin: top;">
             <img src="@/assets/images/frontend/index/intro_classical.jpg" class="img-fluid" />
           </div>
           <transition name="fade">
             <div
-              class="introBox intro_classical1"
-              v-show="classical.showOtherImg === true"
-              :style="`transform: translateY(${classical.translate1}px)`"
+              class="introBox intro1"
+              v-show="classical.imgs"
+              :style="`transform: translateY(${classical.imgLeft}px)`"
             >
               <img src="@/assets/images/frontend/index/intro_classical1.jpg" class="img-fluid" />
             </div>
           </transition>
           <transition name="fade">
             <div
-              class="introBox intro_classical2"
-              v-show="classical.showOtherImg === true"
-              :style="`transform: translateY(${classical.translate2}px)`"
+              class="introBox intro2"
+              v-show="classical.imgs"
+              :style="`transform: translateY(${classical.imgRight}px)`"
             >
               <img src="@/assets/images/frontend/index/intro_classical2.png" class="img-fluid" />
             </div>
           </transition>
         </div>
       </div>
-      <div v-show="classical.showOtherImg === true" style="margin-top: 1000px;">
-        <div class="position-relative" ref="intro_ukulele">
-          <div :style="`transform: scale(${ukulele.scale})`" class="ukulele mx-auto">
+      <div
+        class="animate__animated animate__fadeIn"
+        v-show="ukulele.banner"
+        style="margin-top: 180vh;"
+      >
+        <div class="introProduct" ref="intro_ukulele" :style="ukuleleStyle">
+          <div :style="`transform: scale(${ukulele.scale})`" style="transform-origin: top;">
             <img src="@/assets/images/frontend/index/intro_ukulele.jpg" class="img-fluid" />
           </div>
           <transition name="fade">
             <div
-              class="introBox intro_ukulele1"
-              v-show="ukulele.showOtherImg === true"
-              :style="`transform: translateY(${ukulele.translate1}px)`"
+              class="introBox intro1"
+              v-show="ukulele.imgs"
+              :style="`transform: translateY(${ukulele.imgLeft}px)`"
             >
               <img src="@/assets/images/frontend/index/intro_ukulele1.jpg" class="img-fluid" />
             </div>
           </transition>
           <transition name="fade">
             <div
-              class="introBox intro_ukulele2"
-              v-show="ukulele.showOtherImg === true"
-              :style="`transform: translateY(${ukulele.translate2}px)`"
+              class="introBox intro2"
+              v-show="ukulele.imgs"
+              :style="`transform: translateY(${ukulele.imgRight}px)`"
             >
               <img src="@/assets/images/frontend/index/intro_ukulele2.png" class="img-fluid" />
             </div>
@@ -118,7 +127,7 @@
         <router-link
           to="/products"
           class="introText"
-          :style="`bottom: ${textPosition}%; z-index: ${ele.index}`"
+          :style="`bottom: ${titlePosition}%; z-index: ${eleTextIndex}`"
         >
           <span :class="[eleFade, 'textStroke']" style="animation-delay:.2s;">E</span>
           <span :class="eleFade" style="animation-delay:.3s;">l</span>
@@ -139,7 +148,7 @@
         <router-link
           to="/products"
           class="introText"
-          :style="`bottom: ${textPosition}%; z-index: ${classical.index}`"
+          :style="`bottom: ${titlePosition}%; z-index: ${classicalTextIndex}`"
         >
           <span :class="[classicalFade, 'textStroke']" style="animation-delay:.2s;">C</span>
           <span :class="classicalFade" style="animation-delay:.3s;">l</span>
@@ -161,7 +170,7 @@
         <router-link
           to="/products"
           class="introText"
-          :style="`bottom: ${textPosition}%; z-index: ${ukulele.index}`"
+          :style="`bottom: ${titlePosition}%; z-index: ${ukuleleTextIndex}`"
         >
           <span :class="[ukuleleFade, 'textStroke']" style="animation-delay:.2s;">U</span>
           <span :class="ukuleleFade" style="animation-delay:.3s;">k</span>
@@ -197,20 +206,6 @@
         <router-link to="/products" class="mIntro h2 d-block text-center">Ukulele</router-link>
       </div>
     </section>
-    <footer
-      class="text-center pt-5 pb-1"
-      style="margin-top: 500px;"
-      v-show="ukulele.showOtherImg === true"
-    >
-      <div class="mt-5 d-block d-lg-flex justify-content-center">
-        <div>
-          © 2021. All Rights Reserved.
-        </div>
-        <div>
-          For learning use only, no commercial use
-        </div>
-      </div>
-    </footer>
   </main>
 </template>
 <script>
@@ -296,42 +291,29 @@ export default index;
 
 /*BANNER END*/
 /*INTRO*/
+.intro_ele {
+  position: relative;
+}
+.introProducts {
+  min-height: 1000vh;
+}
+.introProduct {
+  height: 200vh;
+  position: relative;
+}
 .introBox {
   position: absolute;
   transition: all 0.4s ease;
 }
-.intro_ele1 {
+.intro1 {
   width: 25vw;
   left: 10%;
-  bottom: 0;
+  top: 60vh;
 }
-.intro_ele2 {
+.intro2 {
   width: 30vw;
   right: 15%;
-  bottom: -25vw;
-}
-.intro_classical1 {
-  width: 15vw;
-  left: 10%;
-  bottom: -10vw;
-}
-.intro_classical2 {
-  width: 25vw;
-  right: 15%;
-  bottom: -25vw;
-}
-.ukulele {
-  width: 55vw;
-}
-.intro_ukulele1 {
-  width: 18vw;
-  left: 20%;
-  bottom: 5%;
-}
-.intro_ukulele2 {
-  width: 25vw;
-  right: 15%;
-  bottom: -20vw;
+  top: 80vh;
 }
 .introText {
   position: fixed;
@@ -416,8 +398,5 @@ export default index;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-}
-.footer {
-  font-size: 0.75rem;
 }
 </style>
