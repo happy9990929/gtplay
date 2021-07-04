@@ -12,10 +12,15 @@
         </div>
       </div>
     </div>
-    <div class="textBox mx-auto my-5">
+    <div class="textBox mx-auto mt-5">
       GTPLAY 創立於 1990 年，是台灣早期少數有提供吉他製作、改裝調整維修的店家，
       擁有多年且豐富的工藝技術，對音色的標準更是嚴格把關，眾人一致叫好的好聲音，
       這裡有多種各式桶身的吉他、電吉他、烏克麗麗挑選，並提供客製需求，打造獨一無二屬於您的吉他。
+      <div class="d-flex justify-content-center mx-auto mt-5">
+        <img src="@/assets/images/frontend/about/fb.png" class="icon img-fluid" />
+        <img src="@/assets/images/frontend/about/ig.png" class="icon img-fluid" />
+        <img src="@/assets/images/frontend/about/pchome.png" class="icon img-fluid" />
+      </div>
     </div>
   </div>
 </template>
@@ -28,12 +33,13 @@ export default {
         translate: 100
       },
       scrollBoxStyle: "position: fixed",
-      beforeScroll: document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop,
+      beforeScroll:
+        document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop,
       windowH: window.innerHeight
     };
   },
   mounted() {
-    window.addEventListener("scroll", this.setMask)
+    window.addEventListener("scroll", this.setMask);
   },
   methods: {
     setMask() {
@@ -77,7 +83,7 @@ export default {
     }
   },
   beforeDestroy() {
-    window.removeEventListener("scroll", this.setMask)
+    window.removeEventListener("scroll", this.setMask);
   }
 };
 </script>
@@ -99,5 +105,14 @@ export default {
 .textBox {
   width: 70%;
   line-height: 2rem;
+}
+.icon {
+  margin: 0 10px;
+  cursor: pointer;
+  transform: rotateY(0deg);
+  transition: all 1.2s ease;
+  &:hover {
+    transform: rotateY(360deg);
+  }
 }
 </style>

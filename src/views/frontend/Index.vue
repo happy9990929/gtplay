@@ -42,8 +42,8 @@
     </section>
 
     <section class="mt-5 d-none d-lg-block introProducts" ref="intro">
-      <div class="introProduct intro_ele" ref="intro_ele" :style="eleStyle">
-        <div :style="`transform: scale(${ele.scale})`" style="transform-origin: top;">
+      <div class="introProduct" ref="intro_ele" :style="eleStyle">
+        <div class="introProductBanner" :style="`transform: scale(${ele.scale})`">
           <img src="@/assets/images/frontend/index/intro_ele.jpg" class="img-fluid" />
         </div>
         <transition name="fade">
@@ -71,7 +71,7 @@
         style="margin-top: 80vh"
       >
         <div class="introProduct" ref="intro_classical" :style="classicalStyle">
-          <div :style="`transform: scale(${classical.scale})`" style="transform-origin: top;">
+          <div class="introProductBanner" :style="`transform: scale(${classical.scale})`">
             <img src="@/assets/images/frontend/index/intro_classical.jpg" class="img-fluid" />
           </div>
           <transition name="fade">
@@ -97,10 +97,10 @@
       <div
         class="animate__animated animate__fadeIn"
         v-show="ukulele.banner"
-        style="margin-top: 180vh;"
+        style="margin-top: 280vh;"
       >
         <div class="introProduct" ref="intro_ukulele" :style="ukuleleStyle">
-          <div :style="`transform: scale(${ukulele.scale})`" style="transform-origin: top;">
+          <div class="introProductBanner" :style="`transform: scale(${ukulele.scale})`">
             <img src="@/assets/images/frontend/index/intro_ukulele.jpg" class="img-fluid" />
           </div>
           <transition name="fade">
@@ -280,7 +280,6 @@ export default index;
     line-height: 2.5rem;
   }
 }
-
 .titleName {
   font-size: 3vw;
   color: #feecba;
@@ -291,15 +290,18 @@ export default index;
 
 /*BANNER END*/
 /*INTRO*/
-.intro_ele {
-  position: relative;
-}
 .introProducts {
   min-height: 1000vh;
 }
 .introProduct {
   height: 200vh;
   position: relative;
+  &:last-child {
+    height: 100vh;
+  }
+}
+.introProductBanner {
+  transform-origin: top;
 }
 .introBox {
   position: absolute;

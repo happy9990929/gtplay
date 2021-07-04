@@ -126,7 +126,7 @@ export default {
         const windowH = window.innerHeight;
         const eleTop = bannerH;
         const classcilTop = bannerH + windowH * 2;
-        const ukuleleTop = bannerH + windowH * 6;
+        const ukuleleTop = bannerH + windowH * 5.5;
 
         // 縮放、imgs動畫
         let eleScale = false;
@@ -211,12 +211,15 @@ export default {
           this.classical.banner = true;
         }
 
-        if (this.$refs.intro_classical.offsetTop > 0) {
-          // DOM 出現時執行
+        // v-show 完成後執行
+        this.$nextTick(function() {
           if (scrollTop >= this.$refs.intro_classical.offsetTop) {
             this.classicalStyle = "position: fixed; top: 0;";
           }
-        }
+          if (scrollTop > classcilTop + windowH * 3) {
+            this.classicalStyle = `transform: translateY(${windowH * 2}px);`;
+          }
+        });
 
         if (scrollTop > classcilTop + windowH && scrollTop < ukuleleTop) {
           classicalScale = true;
@@ -249,10 +252,6 @@ export default {
           this.classical.imgs = true;
         }
 
-        if (scrollTop > classcilTop + windowH * 3) {
-          this.classicalStyle = `transform: translateY(${windowH * 2}px);`;
-        }
-
         // ukulele
         if (scrollTop < classcilTop + windowH * 3) {
           this.ukulele.banner = false;
@@ -267,11 +266,15 @@ export default {
           this.ukulele.banner = true;
         }
 
-        if (this.$refs.intro_ukulele.offsetTop > 0) {
+        // v-show 完成後執行
+        this.$nextTick(function() {
           if (scrollTop >= this.$refs.intro_ukulele.offsetTop) {
             this.ukuleleStyle = "position: fixed; top: 0;";
           }
-        }
+          if (scrollTop > ukuleleTop + windowH * 3) {
+            this.ukuleleStyle = `transform: translateY(${windowH * 2}px);`;
+          }
+        });
 
         if (scrollTop > ukuleleTop + windowH) {
           ukuleleScale = true;
@@ -302,10 +305,6 @@ export default {
 
         if (scrollTop > ukuleleTop + windowH * 2) {
           this.ukulele.imgs = true;
-        }
-
-        if (scrollTop > ukuleleTop + windowH * 3) {
-          this.ukuleleStyle = `transform: translateY(${windowH * 2}px);`;
         }
       };
       scrollFun();
