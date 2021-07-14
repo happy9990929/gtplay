@@ -78,22 +78,32 @@ export default {
 
 <style lang="scss" scoped>
 .inpageBanner {
-  height: 350px;
+  height: 200px;
   background-position-x: center;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid #383838;
+   @media screen and (min-width: 768px) {
+    height: 350px;
+  }
 }
 .titleName {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #feecba;
+  @media screen and (min-width: 768px) {
+    font-size: 2rem;
+  }
 }
 .subName {
   color: rgba(255, 255, 255, 0.1);
   font-family: Arial;
-  font-size: 4rem;
+  font-size: 3rem;
   margin-top: -3rem;
   white-space: nowrap;
+  @media screen and (min-width: 768px) {
+    font-size: 4rem;
+  }
 }
 </style>

@@ -19,8 +19,8 @@
             {{ item }}
           </li>
         </ul>
-        <div class="row animate__animated animate__fadeInUp animate__delay-.5s">
-          <div class="col-6 col-lg-4 my-4 px-4" v-for="item in filterCategories" :key="item.id">
+        <div class="row animate__animated animate__fadeInUp animate__delay-.5s mx-auto productItemBox">
+          <div class="col-6 col-lg-4 my-2 my-md-4 px-2 px-md-4" v-for="item in filterCategories" :key="item.id">
             <router-link :to="`/product/${item.id}`" class="productBg text-center pb-3 d-block">
               <div class="productImg" :style="`background-image: url('${item.imageUrl}');`"></div>
               <span class="productName">{{ item.title }}</span>
@@ -102,6 +102,12 @@ export default {
     .productName {
       color: #feecba;
     }
+  }
+}
+.productItemBox {
+  width: 92%;
+  @media screen and (min-width: 768px) {
+    width: 100%;
   }
 }
 .productImg {
