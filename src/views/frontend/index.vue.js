@@ -35,7 +35,11 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener("resize", this.getWindowH);
+    if (
+      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    ) {
+      window.addEventListener("resize", this.getWindowH);
+    }
     window.addEventListener("scroll", this.scrollDom);
   },
   computed: {
@@ -311,7 +315,11 @@ export default {
     }
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.getWindowH);
     window.removeEventListener("scroll", this.scrollDom);
+    if (
+      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    ) {
+      window.removeEventListener("resize", this.getWindowH);
+    }
   }
 };
