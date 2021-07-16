@@ -12,8 +12,8 @@ import headerMenu from "./Header.vue";
 export default {
   components: {
     headerMenu,
-    footerInfo
-  }
+    footerInfo,
+  },
 };
 </script>
 <style>
@@ -30,7 +30,7 @@ export default {
   padding: 0;
 }
 @mixin outlineBtnHoverAngle {
-  width: 80px;
+  width: 3rem;
   background-color: #feecba;
 }
 ::v-deep .outlineBtn {
@@ -56,7 +56,7 @@ export default {
   }
 }
 @mixin angleLine {
-  width: 50px;
+  width: 2rem;
   height: 1px;
   display: inline-block;
   position: relative;
@@ -141,5 +141,6 @@ export default {
 ::v-deep .table td {
   vertical-align: middle;
   border: 0;
+  white-space: nowrap;
 }
 </style>

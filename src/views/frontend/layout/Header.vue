@@ -3,15 +3,8 @@
     <router-link to="/" class="navbar-brand mx-auto mx-lg-5">
       <img src="@/assets/images/logo.png" class="navLogo" />
     </router-link>
-    <button
-      class="navbar-toggler border-0 position-absolute"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbar"
-      aria-controls="navbar"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler border-0 position-absolute" type="button" data-toggle="collapse" data-target="#navbar"
+      aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
@@ -21,17 +14,15 @@
           <router-link class="nav-link" to="/about">關於我們</router-link>
           <router-link class="nav-link" to="/products">產品介紹</router-link>
           <router-link class="nav-link d-lg-none" to="/cart">
-            購物車<span class="cartNum text-white ml-1 ml-lg-0">{{ getCartAmount }}</span>
+            購物車<span class="cartNum ml-1 ml-lg-0">{{ getCartAmount }}</span>
           </router-link>
         </div>
         <router-link to="/cart" class="d-none d-lg-block">
-          <div
-            class="cartBox text-gold d-flex justify-content-center align-items-center"
-            :style="`transform: rotate3d(0, 0, 1, ${cartRotate}deg);`"
-          >
+          <div class="cartBox text-gold d-flex justify-content-center align-items-center"
+            :style="`transform: rotate3d(0, 0, 1, ${cartRotate}deg);`">
             <span class="cartIcon">
               <i class="fas fa-shopping-cart"></i>
-              <span class="cartNum text-white">{{ getCartAmount }}</span>
+              <span class="cartNum">{{ getCartAmount }}</span>
             </span>
           </div>
         </router-link>
@@ -45,11 +36,11 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      cartRotate: 0 // 右上購物車按鈕旋轉角度
+      cartRotate: 0, // 右上購物車按鈕旋轉角度
     };
   },
   computed: {
-    ...mapGetters(["getCartAmount", "getCartTotal"])
+    ...mapGetters(["getCartAmount", "getCartTotal"]),
   },
   created() {
     this.$store.dispatch("handCart");
@@ -58,10 +49,14 @@ export default {
   methods: {
     scrollCart() {
       let beforeScrollY =
-        document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        document.documentElement.scrollTop ||
+        window.pageYOffset ||
+        document.body.scrollTop;
       const setRotate = () => {
         const currentScrollY =
-          document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+          document.documentElement.scrollTop ||
+          window.pageYOffset ||
+          document.body.scrollTop;
         let isScrollDown = currentScrollY >= beforeScrollY ? true : false;
         if (isScrollDown) {
           // 向下滾動
@@ -74,8 +69,8 @@ export default {
         }
       };
       window.addEventListener("mousewheel", setRotate);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -87,6 +82,7 @@ export default {
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0;
+  border-bottom: 1px solid #605e59;
   @media screen and (min-width: 992px) {
     position: absolute;
     font-size: 1rem;
@@ -96,13 +92,13 @@ export default {
 .navbar-nav {
   .nav-link {
     color: #fff;
-    background-color: rgba(0,0,0,.9);
+    background-color: #171717;
     padding-top: 1rem;
     padding-bottom: 1rem;
     @media screen and (min-width: 992px) {
-        background-color: transparent;
-        margin-left: .5rem;
-        margin-right: .5rem;
+      background-color: transparent;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
     }
     &:hover {
       background-color: #feecba;
@@ -113,11 +109,10 @@ export default {
       }
     }
     &.active {
-      background-color: #feecba;
-      color: #000;
+      background-color: #000;
+      color: #feecba;
       @media screen and (min-width: 992px) {
         background-color: transparent;
-        color: #feecba;
       }
     }
   }
@@ -150,7 +145,7 @@ export default {
   &:hover {
     background-color: #000;
     animation-name: bounceIn;
-    animation-duration: .8s;
+    animation-duration: 0.8s;
   }
 }
 @keyframes bounceIn {
@@ -198,17 +193,20 @@ export default {
   }
 }
 .cartNum {
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
+  width: 1.2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
   border-radius: 100%;
   font-size: 0.8rem;
-  background-color: #000;
+  background-color: #feecba;
+  color: #000;
   display: inline-block;
   @media screen and (min-width: 992px) {
     position: absolute;
     top: 3px;
     right: -20px;
+    background-color: #000;
+    color: #fff;
   }
 }
 .cartIcon {

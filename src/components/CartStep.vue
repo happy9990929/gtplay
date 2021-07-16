@@ -32,19 +32,19 @@ export default {
     },
     checkoutActive() {
       return this.$route.name === "Checkout" ? "active" : "";
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .step {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   color: #000;
   background-color: #b7b7b7;
-  width: 2rem;
-  height: 2rem;
-  line-height: 2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
   border-radius: 100%;
   font-weight: bold;
   display: flex;
@@ -52,15 +52,25 @@ export default {
   &.active {
     background-color: #feecba;
   }
+  @media screen and (min-width: 768px) {
+    font-size: 1.2rem;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+  }
 }
 .stepText {
   color: #b7b7b7;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   border-bottom: 2px solid;
-  margin: 0 0.6rem;
+  margin: 0 0.4rem;
   &.active {
     color: #feecba;
     border-color: #feecba;
+  }
+  @media screen and (min-width: 768px) {
+    font-size: 1.2rem;
+    margin: 0 0.6rem;
   }
 }
 .stepArrow {
