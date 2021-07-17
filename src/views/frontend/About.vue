@@ -2,12 +2,9 @@
   <div>
     <div class="bannerBox position-relative animate__animated animate__fadeIn">
       <div class="scrollBox" :style="`${scrollBoxStyle}`">
-        <div
-          class="mask d-flex justify-content-center align-items-center"
-          :style="
+        <div class="mask d-flex justify-content-center align-items-center" :style="
             `background-color: rgba(0,0,0,${mask.opacity}); transform: translateY(${mask.translate}%);`
-          "
-        >
+          ">
           <img src="@/assets/images/frontend/about/GTlogo.png" class="img-fluid px-5 px-md-0" />
         </div>
       </div>
@@ -19,7 +16,9 @@
       <div class="d-flex justify-content-center mx-auto mt-5">
         <img src="@/assets/images/frontend/about/fb.png" class="icon img-fluid" />
         <img src="@/assets/images/frontend/about/ig.png" class="icon img-fluid" />
-        <img src="@/assets/images/frontend/about/pchome.png" class="icon img-fluid" />
+        <a href="https://github.com/happy9990929" target="_blank">
+          <img src="@/assets/images/frontend/about/github.png" class="icon img-fluid" />
+        </a>
       </div>
     </div>
   </div>
@@ -30,12 +29,14 @@ export default {
     return {
       mask: {
         opacity: 0,
-        translate: 100
+        translate: 100,
       },
       scrollBoxStyle: "position: fixed",
       beforeScroll:
-        document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop,
-      windowH: window.innerHeight
+        document.documentElement.scrollTop ||
+        window.pageYOffset ||
+        document.body.scrollTop,
+      windowH: window.innerHeight,
     };
   },
   mounted() {
@@ -46,7 +47,9 @@ export default {
       const aboutMask = () => {
         // current scrollTop
         let scrollTop =
-          document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+          document.documentElement.scrollTop ||
+          window.pageYOffset ||
+          document.body.scrollTop;
 
         let isScrollDown = scrollTop >= this.beforeScroll ? true : false; // 判斷 scroll 上下
 
@@ -62,7 +65,8 @@ export default {
           if (this.mask.opacity >= 0.8) this.mask.opacity = 0.8;
 
           // 大於螢幕高度，移動到100%
-          if (scrollTop > this.windowH) this.scrollBoxStyle = "transform: translateY(100%);";
+          if (scrollTop > this.windowH)
+            this.scrollBoxStyle = "transform: translateY(100%);";
 
           this.beforeScroll = scrollTop;
         } else {
@@ -80,11 +84,11 @@ export default {
         }
       };
       aboutMask();
-    }
+    },
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.setMask);
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

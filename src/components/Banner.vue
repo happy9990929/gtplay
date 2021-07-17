@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="inpageBanner align-items-center align-items-lg-end"
-    :style="`background-image: url('${publicPath}images/${bannerImg}.jpg');`"
-  >
+  <div class="inpageBanner align-items-center align-items-lg-end"
+    :style="`background-image: url('${publicPath}images/${bannerImg}.jpg');`">
     <div class="text-center mt-5 mb-lg-5 animate__animated animate__bounceIn">
       <div class="titleName">{{ cnTitle }}</div>
       <div class="subName">{{ enTitle }}</div>
@@ -14,7 +12,7 @@
 export default {
   data() {
     return {
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
     };
   },
   computed: {
@@ -71,8 +69,8 @@ export default {
         default:
           return "products";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -85,7 +83,7 @@ export default {
   justify-content: center;
   align-items: center;
   border: 1px solid #383838;
-   @media screen and (min-width: 768px) {
+  @media screen and (min-width: 768px) {
     height: 350px;
   }
 }
@@ -99,11 +97,12 @@ export default {
 .subName {
   color: rgba(255, 255, 255, 0.1);
   font-family: Arial;
-  font-size: 3rem;
-  margin-top: -3rem;
+  font-size: 2rem;
+  margin-top: -2rem;
   white-space: nowrap;
   @media screen and (min-width: 768px) {
     font-size: 4rem;
+    margin-top: -3rem;
   }
 }
 </style>

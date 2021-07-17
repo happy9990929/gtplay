@@ -82,7 +82,7 @@ export default {
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0;
-  border-bottom: 1px solid #605e59;
+
   @media screen and (min-width: 992px) {
     position: absolute;
     font-size: 1rem;
@@ -132,6 +132,12 @@ export default {
   outline: 0;
   top: 4px;
   left: 0;
+}
+.navbar-collapse {
+  border-bottom: 1px solid #605e59;
+  @media screen and (min-width: 992px) {
+    border-bottom: 0;
+  }
 }
 .cartBox {
   background-color: #531000;

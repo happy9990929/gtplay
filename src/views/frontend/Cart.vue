@@ -16,10 +16,7 @@
           <tbody class="tbody">
             <tr v-for="item in getCart" :key="item.id">
               <td>
-                <div
-                  class="cartItem"
-                  :style="`background-image: url('${item.product.imageUrl}')`"
-                ></div>
+                <div class="cartItem" :style="`background-image: url('${item.product.imageUrl}')`"></div>
               </td>
               <td class="align-middle">{{ item.product.title }}</td>
               <td class="align-middle">{{ item.product.price }}</td>
@@ -50,10 +47,10 @@
           <span class="angleLineRight mr-2"></span>
           繼續選購
         </router-link>
-        <router-link to="/info" class="outlineBtn next">
+        <button type="button" @click="route.push('/info')" class="outlineBtn next" :disabled="getCart.length === 0">
           下一步
           <span class="angleLineLeft ml-2"></span>
-        </router-link>
+        </button>
       </div>
     </div>
   </main>
@@ -66,20 +63,23 @@ import banner from "@/components/Banner.vue";
 export default {
   components: {
     cartStep,
-    banner
+    banner,
   },
   computed: {
-    ...mapGetters(["getCart", "getCartAmount", "getCartTotal"])
+    ...mapGetters(["getCart", "getCartAmount", "getCartTotal"]),
   },
   created() {
     this.$store.dispatch("handCart");
+  },
+  mounted() {
+    console.log(this.getCart.length === 0);
   },
   methods: {
     deleteCart(item) {
       console.log(item);
       this.$store.dispatch("handDeleteCart", item);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
