@@ -47,7 +47,7 @@
           <span class="angleLineRight mr-2"></span>
           繼續選購
         </router-link>
-        <button type="button" @click="route.push('/info')" class="outlineBtn next" :disabled="getCart.length === 0">
+        <button type="button" @click="$router.push('/info')" class="outlineBtn next" :disabled="getCart.length === 0">
           下一步
           <span class="angleLineLeft ml-2"></span>
         </button>
@@ -72,7 +72,7 @@ export default {
     this.$store.dispatch("handCart");
   },
   mounted() {
-    console.log(this.getCart.length === 0);
+    // console.log(this.$router);
   },
   methods: {
     deleteCart(item) {
