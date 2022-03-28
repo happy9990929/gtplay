@@ -3,16 +3,19 @@
     <header-menu />
     <router-view />
     <footer-info />
+    <gotop />
   </div>
 </template>
 <script>
 import footerInfo from "./Footer.vue";
 import headerMenu from "./Header.vue";
+import gotop from "@/components/Gotop.vue";
 
 export default {
   components: {
     headerMenu,
     footerInfo,
+    gotop
   },
 };
 </script>
